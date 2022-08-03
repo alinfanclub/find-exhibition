@@ -1,5 +1,4 @@
 import { createRouter, createWebHistory } from "vue-router";
-import InfoView from "@/views/InfoSpace.vue";
 const routes = [
   {
     path: "/",
@@ -7,7 +6,7 @@ const routes = [
   },
   {
     path: "/space/:id",
-    component: InfoView,
+    component: () => import("@/views/InfoSpace.vue"),
   },
 ];
 
