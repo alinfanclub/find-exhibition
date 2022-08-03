@@ -144,6 +144,7 @@ export default {
             store.state.positions[i].info +
             "       </div>" +
             "  </div>" +
+            '<div id="arrow"></div>' +
             "</div>",
           map: map,
           position: marker.getPosition(),

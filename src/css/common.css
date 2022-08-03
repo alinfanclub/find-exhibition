@@ -91,7 +91,7 @@
   .custom_zoomcontrol span:first-child {
     border-bottom: 1px solid #bfbfbf;
   }
-  .wrap {position: absolute;left: 0;bottom: -200px;width: 20rem;height: 20rem;margin-left: -10rem;text-align: left;overflow: hidden;font-size: 12px;font-family: 'Malgun Gothic', dotum, '돋움', sans-serif;line-height: 1.5; z-index: 10 !important;}
+  .wrap {position: absolute;left: 0;bottom: -120px;width: 20rem;height: 20rem;margin-left: -10rem;text-align: left;overflow: hidden;font-size: 12px;font-family: 'Malgun Gothic', dotum, '돋움', sans-serif;line-height: 1.5; z-index: 10 !important;}
   .wrap .info {
     background-color: #fff;
     text-align: center;
@@ -100,3 +100,4 @@
   .wrap .info  {
     margin: 1rem 0;
   }
+  .info:after {content: '';position: absolute;margin-left: -12px;left: 50.5%;bottom: 152px;width: 22px;height: 12px;background: url('https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/vertex_white.png')}
