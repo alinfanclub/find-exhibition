@@ -216,8 +216,9 @@ export default {
 #xxx {
   background-color: #fff;
   position: absolute;
-  top: 20%;
+  bottom: 20%;
   left: 50%;
+  transform: translateX(-50%);
   z-index: 9999;
   overflow: hidden;
   width: 3rem;
