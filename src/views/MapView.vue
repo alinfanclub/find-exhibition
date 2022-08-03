@@ -1,6 +1,11 @@
 <template>
   <div>
-    <show-map id="map"></show-map>
+    <show-map ref="map">
+      <div class="overlay">
+        <h3>오버레이 화면</h3>
+        <div>이곳에 항구 정보를 표시함</div>
+      </div>
+    </show-map>
   </div>
 </template>
 
@@ -14,4 +19,4 @@ export default {
 };
 </script>
 
-<style></style>
+<style scoped></style>

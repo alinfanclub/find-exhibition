@@ -1,20 +1,21 @@
 import { createStore } from "vuex";
-
+import mutations from "./mutations";
+import getters from "./getters";
+import actions from "./actions";
+import positions from "./positions";
 export default createStore({
   state: {
     mainLocation: {
-      lat: 33.450701,
-      lng: 126.570667,
-      viewLevel: 2,
+      lat: 35.17977666295549,
+      lng: 129.07488498030014,
     },
-    nowLocation: {
-      lat: 0,
-      lng: 0,
-    },
-    overlay: null,
+    positions,
+    setLevel: 5,
+    viewLevel: 8,
+    spaceData: [],
   },
-  getters: {},
-  mutations: {},
-  actions: {},
+  actions,
+  mutations,
+  getters,
   modules: {},
 });
