@@ -152,7 +152,7 @@ export default {
 
         document.querySelector("#xxx").addEventListener("click", function () {
           overlay.setMap(null);
-          map.setDraggable(true);
+          // map.setDraggable(true);
         });
         overlay.setMap(null);
         kakao.maps.event.addListener(marker, "click", function () {
@@ -160,7 +160,7 @@ export default {
           // console.log(overlay.getVisible(this));
           overlay.setMap(map);
           map.panTo(this.getPosition(store.state.setLevel));
-          map.setDraggable(false);
+          // map.setDraggable(false);
           console.log(store.state.closeBtn);
           store.state.closeBtn = true;
         });
