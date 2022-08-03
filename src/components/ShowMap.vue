@@ -216,12 +216,12 @@ export default {
 #xxx {
   background-color: #fff;
   position: absolute;
-  top: 31%;
-  left: 56.7%;
+  top: 20%;
+  left: 50%;
   z-index: 9999;
   overflow: hidden;
-  width: 1.5rem;
-  height: 1.5rem;
+  width: 3rem;
+  height: 3rem;
   border-radius: 50%;
 }
 #bg {
