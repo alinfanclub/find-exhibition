@@ -21,7 +21,7 @@
         <div id="bg" v-show="this.$store.state.closeBtn == true"></div>
       </div>
       <!-- 지도타입 컨트롤 div 입니다 -->
-      <div class="custom_typecontrol radius_border">
+      <!-- <div class="custom_typecontrol radius_border">
         <span
           id="btnRoadmap"
           class="selected_btn"
@@ -31,9 +31,9 @@
         <span id="btnSkyview" class="btn" @click="setMapType('skyview')"
           >스카이뷰</span
         >
-      </div>
+      </div> -->
       <!-- 지도 확대, 축소 컨트롤 div 입니다 -->
-      <div class="custom_zoomcontrol radius_border">
+      <!-- <div class="custom_zoomcontrol radius_border">
         <span @click="zoomIn()"
           ><img
             src="https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/ico_plus.png"
@@ -44,7 +44,7 @@
             src="https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/ico_minus.png"
             alt="축소"
         /></span>
-      </div>
+      </div> -->
     </div>
   </div>
 </template>
@@ -147,7 +147,6 @@ export default {
             "</div>",
           map: map,
           position: marker.getPosition(),
-          zIndex: 600,
         });
 
         document.querySelector("#xxx").addEventListener("click", function () {
@@ -233,15 +232,15 @@ export default {
   z-index: 1;
 }
 /* we will explain what these classes do next! */
-.v-enter-active {
-  transition: opacity 0.5s step-end;
-}
-.v-leave-active {
-  transition: opacity 0.1s ease;
-}
+// .v-enter-active {
+//   transition: opacity 0.5s step-end;
+// }
+// .v-leave-active {
+//   transition: opacity 0.1s ease;
+// }
 
-.v-enter-from,
-.v-leave-to {
-  opacity: 0;
-}
+// .v-enter-from,
+// .v-leave-to {
+//   opacity: 0;
+// }
 </style>
