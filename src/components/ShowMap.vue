@@ -8,7 +8,17 @@
     </div>
     <div class="map_wrap">
       <div id="map">
-        <slot name="overlay"></slot>
+        <Transition>
+          <ion-icon
+            name="close-outline"
+            id="xxx"
+            v-show="this.$store.state.closeBtn == true"
+            @click="hideBtn()"
+          >
+            X
+          </ion-icon>
+        </Transition>
+        <div id="bg" v-show="this.$store.state.closeBtn == true"></div>
       </div>
       <!-- 지도타입 컨트롤 div 입니다 -->
       <div class="custom_typecontrol radius_border">
@@ -47,6 +57,7 @@ export default {
     return {
       modalOpen: false,
       keywordSearch: "",
+      closeBtn: false,
     };
   },
   mounted() {
@@ -136,25 +147,32 @@ export default {
             "</div>",
           map: map,
           position: marker.getPosition(),
+          zIndex: 600,
+        });
+
+        document.querySelector("#xxx").addEventListener("click", function () {
+          overlay.setMap(null);
+          map.setDraggable(true);
         });
         overlay.setMap(null);
         kakao.maps.event.addListener(marker, "click", function () {
-          for (let i = 0; i < store.state.positions.length; i++) {
-            overlay.setMap(null);
-            if (store.state.positions[i].show == false) {
-              overlay.setMap(map);
-              store.state.positions[i].show = true;
-            } else if (store.state.positions[i].show == true) {
-              store.state.positions[i].show = false;
-            }
-          }
+          // overlay.setMap(map);
+          // console.log(overlay.getVisible(this));
+          overlay.setMap(map);
           map.panTo(this.getPosition(store.state.setLevel));
+          map.setDraggable(false);
+          console.log(store.state.closeBtn);
+          store.state.closeBtn = true;
         });
       }
     },
     CenterSet() {
       this.$store.state.mainLocation.lat = 35.109011427681004;
       this.$store.state.mainLocation.lng = 128.94260030819132;
+    },
+    hideBtn() {
+      this.$store.state.closeBtn = !this.$store.state.closeBtn;
+      console.log("111");
     },
     zoomOut() {
       var level = this.map.getLevel();
@@ -194,5 +212,35 @@ export default {
       display: none;
     }
   }
+}
+#xxx {
+  background-color: #fff;
+  position: absolute;
+  top: 31%;
+  left: 56.7%;
+  z-index: 9999;
+  overflow: hidden;
+  width: 1.5rem;
+  height: 1.5rem;
+  border-radius: 50%;
+}
+#bg {
+  position: absolute;
+  content: "";
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+}
+/* we will explain what these classes do next! */
+.v-enter-active {
+  transition: opacity 0.5s step-end;
+}
+.v-leave-active {
+  transition: opacity 0.1s ease;
+}
+
+.v-enter-from,
+.v-leave-to {
+  opacity: 0;
 }
 </style>

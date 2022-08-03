@@ -13,6 +13,7 @@ export default createStore({
     setLevel: 5,
     viewLevel: 8,
     spaceData: [],
+    closeBtn: false,
   },
   actions,
   mutations,
