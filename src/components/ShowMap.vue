@@ -206,11 +206,16 @@ export default {
           "," +
           store.state.positions[i].lng;
         contentRoute.target = "_blank";
-
         contentRoute.appendChild(document.createTextNode("길찾기"));
+
+        let label = document.createElement("div");
+        label.appendChild(
+          document.createTextNode(store.state.positions[i].label)
+        );
 
         content.appendChild(info);
         info.appendChild(header);
+        info.appendChild(label);
         info.appendChild(adress);
         info.appendChild(subBtnArea);
         header.appendChild(title);
