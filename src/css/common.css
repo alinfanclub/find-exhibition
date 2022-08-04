@@ -91,13 +91,54 @@
   .custom_zoomcontrol span:first-child {
     border-bottom: 1px solid #bfbfbf;
   }
-  .wrap {position: absolute;left: 0;bottom: -120px;width: 20rem;height: 20rem;margin-left: -10rem;text-align: left;overflow: hidden;font-size: 12px;font-family: 'Malgun Gothic', dotum, '돋움', sans-serif;line-height: 1.5; z-index: 10 !important;}
+  .wrap {
+    position: relative;
+    left: 0%;
+    transform: translateY(-85%);
+    width: fit-content;
+    height: fit-content;
+    font-size: 1rem;
+    font-family: 'Malgun Gothic', dotum, '돋움', sans-serif;
+    background-color: aqua;
+  }
+
+  .wrap:after {
+    content: '';
+    position: absolute; 
+    left: 50%; 
+    transform: translateX(-50%);
+    bottom: -8%;
+     width: 22px;
+     height: 12px;
+     background: url('https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/vertex_white.png')
+  }
   .wrap .info {
     background-color: #fff;
-    text-align: center;
     padding: 1rem;
+    border: 1px solid #e3e3e3;
+    box-sizing: border-box;
+    box-shadow:2px 1px 5px #b5b5b5;
   }
-  .wrap .info  {
+  .info .adress {
+    font-size: 0.8rem;
     margin: 1rem 0;
   }
-  .info:after {content: '';position: absolute;margin-left: -12px;left: 50.5%;bottom: 152px;width: 22px;height: 12px;background: url('https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/vertex_white.png')}
+
+  .info .header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 0 0 1rem 0;
+  }
+  .info .header .close-btn {
+    font-size: 2rem;
+  }
+  .info .header .title {
+    font-size: 1.5rem;
+    margin-right: 2rem;
+  }
+  .sub-btn-area {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row-reverse;
+  }

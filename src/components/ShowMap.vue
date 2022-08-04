@@ -8,16 +8,6 @@
     </div>
     <div class="map_wrap">
       <div id="map">
-        <Transition>
-          <ion-icon
-            name="close-outline"
-            id="xxx"
-            v-show="this.$store.state.closeBtn == true"
-            @click="hideBtn()"
-          >
-            X
-          </ion-icon>
-        </Transition>
         <div id="bg" v-show="this.$store.state.closeBtn == true"></div>
       </div>
       <!-- 지도타입 컨트롤 div 입니다 -->
@@ -77,12 +67,8 @@ export default {
       this.$store.state.keyword = this.keywordSearch;
       this.initMap();
     },
+    // 맵 초기 셋팅 ---------------------------------------------------------------------
     initMap() {
-      var infowindow = new kakao.maps.InfoWindow({
-        zIndex: 99,
-        removable: true,
-      });
-      this.infowindow = infowindow;
       const container = document.getElementById("map");
       const options = {
         center: new kakao.maps.LatLng(
@@ -91,20 +77,19 @@ export default {
         ),
         level: this.$store.state.viewLevel,
       };
-      //지도 객체를 등록합니다.
-      //지도 객체는 반응형 관리 대상이 아니므로 initMap에서 선언합니다.
       const map = new kakao.maps.Map(container, options);
       this.map = map;
+      // 마커 셋팅  ---------------------------------------------------------------------
       var imageSrc =
         "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png";
       for (var i = 0; i < this.$store.state.positions.length; i++) {
-        // 마커 이미지의 이미지 크기 입니다
+        // 마커 이미지의 이미지 크기
         var imageSize = new kakao.maps.Size(24, 35);
 
-        // 마커 이미지를 생성합니다
+        // 마커 이미지를 생성
         var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize);
 
-        // 마커를 생성합니다
+        // 마커위치 지정
         displayMarker(this.$store.state.positions[i]);
       }
       // 지도에 마커를 표시하는 함수입니다
@@ -115,52 +100,82 @@ export default {
           position: new kakao.maps.LatLng(place.lat, place.lng),
           image: markerImage,
         });
-        // 마커 위에 커스텀오버레이를 표시합니다
-        // 마커를 중심으로 커스텀 오버레이를 표시하기위해 CSS를 이용해 위치를 설정했습니다
+        // 커스텀 오버레이 셋팅  ---------------------------------------------------------------------
+        // 콘텐츠
+        let content = document.createElement("div");
+
+        let header = document.createElement("div");
+        header.className = "header";
+
+        let info = document.createElement("div");
+
+        let close = document.createElement("ion-icon");
+        close.onclick = () => {
+          overlay.setMap(null);
+        };
+
+        let title = document.createElement("div");
+
+        let link = document.createElement("a");
+        link.href = store.state.positions[i].url;
+        link.target = "_blank";
+        link.appendChild(
+          document.createTextNode(`${store.state.positions[i].place_name}`)
+        );
+
+        let adress = document.createElement("div");
+        adress.appendChild(
+          document.createTextNode(`${store.state.positions[i].adress}`)
+        );
+        let subBtnArea = document.createElement("div");
+        subBtnArea.className = "sub-btn-area";
+
+        let moreInfo = document.createElement("a");
+        moreInfo.href = "/space/" + store.state.positions[i].id;
+        moreInfo.appendChild(document.createTextNode("더보기"));
+
+        let contect = document.createElement("div");
+
+        let contentRoute = document.createElement("a");
+        contentRoute.href =
+          "https://map.kakao.com/link/to/" +
+          store.state.positions[i].place_name +
+          "," +
+          store.state.positions[i].lat +
+          "," +
+          store.state.positions[i].lng;
+        contentRoute.target = "_blank";
+
+        contentRoute.appendChild(document.createTextNode("길찾기"));
+
+        content.appendChild(info);
+        info.appendChild(header);
+        info.appendChild(adress);
+        info.appendChild(subBtnArea);
+        header.appendChild(title);
+        header.appendChild(close);
+        subBtnArea.appendChild(contect);
+        subBtnArea.appendChild(moreInfo);
+        contect.appendChild(contentRoute);
+        title.appendChild(link);
+
+        title.className = "title";
+        content.className = "wrap";
+        adress.className = "adress";
+        info.className = "info";
+        close.name = "close-outline";
+        close.className = "close-btn";
+        //오버레이 생성
         var overlay = new kakao.maps.CustomOverlay({
-          // content: "<div>" + store.state.positions[i].place_name + "</div>",
-          content:
-            '<div class="wrap">' +
-            '    <div class="info">' +
-            '        <div class="title">' +
-            store.state.positions[i].place_name +
-            "        </div>" +
-            '        <div class="body">' +
-            '               <div class="">' +
-            '                   <div class="">' +
-            store.state.positions[i].adress +
-            "                     </div>" +
-            store.state.positions[i].url +
-            "               </div>" +
-            store.state.positions[i].findRoute +
-            "         </div>" +
-            "         <div>" +
-            "             <div>" +
-            "                 <span>" +
-            "                   현재 진행중인 전시 : " +
-            store.state.positions[i].exhibition +
-            "                 </span>" +
-            "           </div>" +
-            store.state.positions[i].info +
-            "       </div>" +
-            "  </div>" +
-            '<div id="arrow"></div>' +
-            "</div>",
+          content: content,
           map: map,
           position: marker.getPosition(),
         });
-
-        document.querySelector("#xxx").addEventListener("click", function () {
-          overlay.setMap(null);
-          // map.setDraggable(true);
-        });
+        //초기 오버레이 닫은 상태로 시작하기 위해 추가.
         overlay.setMap(null);
         kakao.maps.event.addListener(marker, "click", function () {
-          // overlay.setMap(map);
-          // console.log(overlay.getVisible(this));
           overlay.setMap(map);
           map.panTo(this.getPosition(store.state.setLevel));
-          // map.setDraggable(false);
           console.log(store.state.closeBtn);
           store.state.closeBtn = true;
         });
@@ -169,10 +184,6 @@ export default {
     CenterSet() {
       this.$store.state.mainLocation.lat = 35.109011427681004;
       this.$store.state.mainLocation.lng = 128.94260030819132;
-    },
-    hideBtn() {
-      this.$store.state.closeBtn = !this.$store.state.closeBtn;
-      console.log("111");
     },
     zoomOut() {
       var level = this.map.getLevel();
@@ -195,9 +206,6 @@ export default {
         roadmapControl.className = "btn";
       }
     },
-    // closeOverlay() {
-    //   overlay.setMap(null);
-    // },
   },
 };
 </script>
