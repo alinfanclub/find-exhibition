@@ -11,7 +11,7 @@ export default createStore({
     },
     positions,
     setLevel: 5,
-    viewLevel: 8,
+    viewLevel: 10,
     spaceData: [],
     closeBtn: false,
   },

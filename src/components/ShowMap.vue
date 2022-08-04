@@ -7,8 +7,10 @@
       </form>
     </div>
     <div class="map_wrap">
-      <div id="map">
-        <div id="bg" v-show="this.$store.state.closeBtn == true"></div>
+      <div id="map"></div>
+      <div id="myCenter">
+        <div id="getCenter">내 위치로 이동하기</div>
+        <div id="hideMyCenter">내 위치 마크 숨기기</div>
       </div>
       <!-- 지도타입 컨트롤 div 입니다 -->
       <!-- <div class="custom_typecontrol radius_border">
@@ -79,6 +81,53 @@ export default {
       };
       const map = new kakao.maps.Map(container, options);
       this.map = map;
+      //--------------------------------------------------------------------------------
+      // 내 위치 마커
+      //--------------------------------------------------------------------------------
+      document
+        .querySelector("#getCenter")
+        .addEventListener("click", function () {
+          if (navigator.geolocation) {
+            // GeoLocation을 이용해서 접속 위치를 얻어옵니다
+            navigator.geolocation.getCurrentPosition(function (position) {
+              var Mylat = position.coords.latitude, // 위도
+                Mylon = position.coords.longitude; // 경도
+
+              var locPosition = new kakao.maps.LatLng(Mylat, Mylon); // 인포윈도우에 표시될 내용입니다
+
+              // 마커와 인포윈도우를 표시합니다
+              displayMarker2(locPosition);
+            });
+          } else {
+            // HTML5의 GeoLocation을 사용할 수 없을때 마커 표시 위치와 인포윈도우 내용을 설정합니다
+
+            var locPosition = new kakao.maps.LatLng(33.450701, 126.570667);
+
+            displayMarker2(locPosition);
+          }
+
+          function displayMarker2(locPosition) {
+            // 마커를 생성합니다
+            var marker = new kakao.maps.Marker({
+              map: map,
+              position: locPosition,
+            });
+            map.setCenter(locPosition);
+
+            map.setLevel(3);
+
+            kakao.maps.event.addListener(marker, "click", function () {
+              map.panTo(locPosition);
+              marker.setMap(null);
+            });
+
+            document
+              .querySelector("#hideMyCenter")
+              .addEventListener("click", function () {
+                marker.setMap(null);
+              });
+          }
+        });
       // 마커 셋팅  ---------------------------------------------------------------------
       var imageSrc =
         "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png";
