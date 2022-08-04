@@ -110,36 +110,42 @@ export default {
 
             displayMarker2(locPosition);
           }
-
+          var imageSrc =
+            "https://www.citypng.com/public/uploads/small/11641513638sanpg6vtthzma5pmyxbnbe0sfhpnqdawfg2pjpzl11hkj9qhwbj7g0ektsxgghfjeml4jehzbjkaujbydzfrhf4nb9agagomf0yz.png";
+          var imageSize = new kakao.maps.Size(20, 20);
+          var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize);
           function displayMarker2(locPosition) {
             // 마커를 생성합니다
             var marker = new kakao.maps.Marker({
               map: map,
               position: locPosition,
+              image: markerImage,
             });
             map.setCenter(locPosition);
 
             map.setLevel(3);
 
             kakao.maps.event.addListener(marker, "click", function () {
-              map.panTo(locPosition);
               marker.setMap(null);
+              store.state.localIconShow = true;
             });
 
             document
               .querySelector("#hideMyCenter")
               .addEventListener("click", function () {
-                marker.setMap(null);
-                store.state.localIconShow = true;
+                map.panTo(locPosition);
+                if (store.state.localIconShow == true) {
+                  marker.setMap(map);
+                }
               });
           }
         });
       // 마커 셋팅  ---------------------------------------------------------------------
       var imageSrc =
-        "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png";
+        "https://cdn.iconscout.com/icon/free/png-256/pin-locate-marker-location-navigation-7-16347.png";
       for (var i = 0; i < this.$store.state.positions.length; i++) {
         // 마커 이미지의 이미지 크기
-        var imageSize = new kakao.maps.Size(24, 35);
+        var imageSize = new kakao.maps.Size(40, 40);
 
         // 마커 이미지를 생성
         var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize);
