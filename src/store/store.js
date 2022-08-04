@@ -14,6 +14,7 @@ export default createStore({
     viewLevel: 10,
     spaceData: [],
     closeBtn: false,
+    localIconShow: true,
   },
   actions,
   mutations,

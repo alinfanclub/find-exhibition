@@ -9,8 +9,12 @@
     <div class="map_wrap">
       <div id="map"></div>
       <div id="myCenter">
-        <div id="getCenter">내 위치로 이동하기</div>
-        <div id="hideMyCenter">내 위치 마크 숨기기</div>
+        <div v-show="this.$store.state.localIconShow == true">
+          <ion-icon name="location" id="getCenter"></ion-icon>
+        </div>
+        <div v-show="this.$store.state.localIconShow == false">
+          <ion-icon name="location-outline" id="hideMyCenter"></ion-icon>
+        </div>
       </div>
       <!-- 지도타입 컨트롤 div 입니다 -->
       <!-- <div class="custom_typecontrol radius_border">
@@ -87,6 +91,7 @@ export default {
       document
         .querySelector("#getCenter")
         .addEventListener("click", function () {
+          store.state.localIconShow = false;
           if (navigator.geolocation) {
             // GeoLocation을 이용해서 접속 위치를 얻어옵니다
             navigator.geolocation.getCurrentPosition(function (position) {
@@ -125,6 +130,7 @@ export default {
               .querySelector("#hideMyCenter")
               .addEventListener("click", function () {
                 marker.setMap(null);
+                store.state.localIconShow = true;
               });
           }
         });
