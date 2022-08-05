@@ -5,7 +5,12 @@
         <input
           type="text"
           v-model="this.keywordSearch"
-          @click="this.$store.state.searchBar = !this.$store.state.searchBar"
+          @click="
+            (this.$store.state.searchBar = !this.$store.state.searchBar),
+              focusOut()
+          "
+          id="searchArea"
+          autocomplete="off"
         />
       </form>
       <div v-show="this.$store.state.searchBar">
@@ -182,7 +187,9 @@ export default {
         );
 
         let adress = document.createElement("div");
-        adress.appendChild(
+
+        let adressP = document.createElement("p");
+        adressP.appendChild(
           document.createTextNode(`${store.state.positions[i].adress}`)
         );
         let subBtnArea = document.createElement("div");
@@ -214,6 +221,7 @@ export default {
         info.appendChild(header);
         info.appendChild(label);
         info.appendChild(adress);
+        adress.appendChild(adressP);
         info.appendChild(subBtnArea);
         header.appendChild(title);
         header.appendChild(close);
@@ -256,32 +264,11 @@ export default {
 
       kakao.maps.event.addListener(map, "click", function () {
         store.state.searchBar = false;
-        console.log("active");
       });
     },
-    CenterSet() {
-      this.$store.state.mainLocation.lat = 35.109011427681004;
-      this.$store.state.mainLocation.lng = 128.94260030819132;
-    },
-    zoomOut() {
-      var level = this.map.getLevel();
-      this.map.setLevel(level + 1);
-    },
-    zoomIn() {
-      var level = this.map.getLevel();
-      this.map.setLevel(level - 1);
-    },
-    setMapType(maptype) {
-      var roadmapControl = document.getElementById("btnRoadmap");
-      var skyviewControl = document.getElementById("btnSkyview");
-      if (maptype === "roadmap") {
-        this.map.setMapTypeId(kakao.maps.MapTypeId.ROADMAP);
-        roadmapControl.className = "selected_btn";
-        skyviewControl.className = "btn";
-      } else {
-        this.map.setMapTypeId(kakao.maps.MapTypeId.HYBRID);
-        skyviewControl.className = "selected_btn";
-        roadmapControl.className = "btn";
+    focusOut() {
+      if (this.$store.state.searchBar == false) {
+        document.querySelector("#searchArea").blur();
       }
     },
   },
@@ -290,73 +277,5 @@ export default {
 
 <style scoped lang="scss">
 @import url("../css/common.css");
-#container {
-  display: flex;
-
-  > div {
-    &:nth-child(1) {
-      display: block;
-      padding: 10px;
-      position: fixed;
-      width: 100%;
-      z-index: 2;
-      left: 50%;
-      transform: translateX(-50%);
-      padding-top: 2rem;
-
-      form {
-        width: 50%;
-        margin: 0 auto;
-        position: relative;
-        height: 3rem;
-        input {
-          position: absolute;
-          top: 50%;
-          left: 50%;
-          transform: translate(-50%, -50%);
-          border: none;
-          box-shadow: 1px 1px 10px #9c9c9c;
-          border-radius: 20px;
-          max-width: 500px;
-          width: 100%;
-          height: 100%;
-          z-index: 6;
-          outline: none;
-          text-align: center;
-          font-size: 1.5rem;
-        }
-      }
-
-      > div {
-        position: fixed;
-        top: 0;
-        left: 50%;
-        transform: translateX(-50%);
-        background-color: #fff;
-        width: 100vw;
-        height: 100vh;
-        padding: 7rem 0;
-        z-index: 5;
-
-        ul {
-          max-height: 400px;
-          overflow: scroll;
-        }
-      }
-    }
-  }
-
-  #nav {
-    position: fixed;
-    top: 2rem;
-    left: 1rem;
-    z-index: 3;
-    font-size: 3rem;
-  }
-}
-.ae {
-  padding: 10px;
-  cursor: pointer;
-  text-align: center;
-}
+@import url("../css/map.css");
 </style>
