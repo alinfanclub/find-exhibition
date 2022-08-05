@@ -1,18 +1,23 @@
 <template>
   <div id="container">
     <div>
-      <form @submit.prevent="inputKeyword()">
-        <input
-          type="text"
-          v-model="this.keywordSearch"
-          @click="
-            (this.$store.state.searchBar = !this.$store.state.searchBar),
-              focusOut()
-          "
-          id="searchArea"
-          autocomplete="off"
-        />
-      </form>
+      <div>
+        <form @submit.prevent="inputKeyword()">
+          <input
+            type="text"
+            v-model="this.keywordSearch"
+            @click="
+              (this.$store.state.searchBar = !this.$store.state.searchBar),
+                focusOut()
+            "
+            id="searchArea"
+            autocomplete="off"
+          />
+        </form>
+        <div id="nav" v-show="!this.$store.state.searchBar">
+          <ion-icon name="menu"></ion-icon>
+        </div>
+      </div>
       <div v-show="this.$store.state.searchBar">
         <ul>
           <li
@@ -20,18 +25,12 @@
             :key="list"
             @click="this.$store.state.searchBar = !this.$store.state.searchBar"
           >
-            <div
-              v-show="list.place_name.includes(this.keywordSearch)"
-              class="ae"
-            >
+            <div v-if="list.place_name.includes(this.keywordSearch)" class="ae">
               {{ list.place_name }}
             </div>
           </li>
         </ul>
       </div>
-    </div>
-    <div id="nav" v-show="!this.$store.state.searchBar">
-      <ion-icon name="menu"></ion-icon>
     </div>
     <div class="map_wrap">
       <div id="map"></div>
