@@ -6,7 +6,7 @@ const routes = [
   },
   {
     path: "/space/:id",
-    component: () => import("@/views/InfoSpace.vue"),
+    component: () => import("@/views/InfoSpaceView.vue"),
   },
 ];
 

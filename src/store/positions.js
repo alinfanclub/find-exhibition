@@ -120,6 +120,26 @@ const positions = [
     exhibition: 0,
     label: "레지던시",
   },
+  {
+    id: "htac",
+    lat: 35.06216293008355,
+    lng: 128.95870284323988,
+    place_name: "홍티아트센터",
+    url: "https://hongtiartvillage.modoo.at/",
+    adress: "부산 사하구 다산로106번길 6 홍티아트센터",
+    exhibition: 0,
+    label: "레지던시",
+  },
+  {
+    id: "htac",
+    lat: 35.06216293008355,
+    lng: 128.95870284323988,
+    place_name: "홍티아트센터",
+    url: "https://hongtiartvillage.modoo.at/",
+    adress: "부산 사하구 다산로106번길 6 홍티아트센터",
+    exhibition: 0,
+    label: "레지던시",
+  },
 ];
 
 export default positions;

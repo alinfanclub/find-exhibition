@@ -2,13 +2,35 @@
   <div id="container">
     <div>
       <form @submit.prevent="inputKeyword()">
-        <input type="text" name="" id="" v-model="this.keywordSearch" />
-        <button type="submit"></button>
+        <input
+          type="text"
+          v-model="this.keywordSearch"
+          @click="this.$store.state.searchBar = !this.$store.state.searchBar"
+        />
       </form>
+      <div v-show="this.$store.state.searchBar">
+        <ul>
+          <li
+            v-for="list in this.$store.state.positions"
+            :key="list"
+            @click="this.$store.state.searchBar = !this.$store.state.searchBar"
+          >
+            <div
+              v-show="list.place_name.includes(this.keywordSearch)"
+              class="ae"
+            >
+              {{ list.place_name }}
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div id="nav" v-show="!this.$store.state.searchBar">
+      <ion-icon name="menu"></ion-icon>
     </div>
     <div class="map_wrap">
       <div id="map"></div>
-      <div id="myCenter">
+      <div id="myCenter" v-show="!this.$store.state.searchBar">
         <div v-show="this.$store.state.localIconShow == true">
           <ion-icon name="location" id="getCenter"></ion-icon>
         </div>
@@ -16,31 +38,6 @@
           <ion-icon name="location-outline" id="hideMyCenter"></ion-icon>
         </div>
       </div>
-      <!-- 지도타입 컨트롤 div 입니다 -->
-      <!-- <div class="custom_typecontrol radius_border">
-        <span
-          id="btnRoadmap"
-          class="selected_btn"
-          @click="setMapType('roadmap')"
-          >지도</span
-        >
-        <span id="btnSkyview" class="btn" @click="setMapType('skyview')"
-          >스카이뷰</span
-        >
-      </div> -->
-      <!-- 지도 확대, 축소 컨트롤 div 입니다 -->
-      <!-- <div class="custom_zoomcontrol radius_border">
-        <span @click="zoomIn()"
-          ><img
-            src="https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/ico_plus.png"
-            alt="확대"
-        /></span>
-        <span @click="zoomOut()"
-          ><img
-            src="https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/ico_minus.png"
-            alt="축소"
-        /></span>
-      </div> -->
     </div>
   </div>
 </template>
@@ -231,7 +228,7 @@ export default {
         info.className = "info";
         close.name = "close-outline";
         close.className = "close-btn";
-        //오버레이 생성
+        //오버레이 생성-----------------------------------------------------
         var overlay = new kakao.maps.CustomOverlay({
           content: content,
           map: map,
@@ -246,6 +243,21 @@ export default {
           store.state.closeBtn = true;
         });
       }
+      const goToPlace = document.querySelectorAll(".ae");
+      goToPlace.forEach(function (event, index) {
+        var moveLatLng = new kakao.maps.LatLng(
+          store.state.positions[index].lat,
+          store.state.positions[index].lng
+        );
+        event.addEventListener("click", function () {
+          map.panTo(moveLatLng);
+        });
+      });
+
+      kakao.maps.event.addListener(map, "click", function () {
+        store.state.searchBar = false;
+        console.log("active");
+      });
     },
     CenterSet() {
       this.$store.state.mainLocation.lat = 35.109011427681004;
@@ -283,39 +295,68 @@ export default {
 
   > div {
     &:nth-child(1) {
-      display: none;
+      display: block;
+      padding: 10px;
+      position: fixed;
+      width: 100%;
+      z-index: 2;
+      left: 50%;
+      transform: translateX(-50%);
+      padding-top: 2rem;
+
+      form {
+        width: 50%;
+        margin: 0 auto;
+        position: relative;
+        height: 3rem;
+        input {
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+          border: none;
+          box-shadow: 1px 1px 10px #9c9c9c;
+          border-radius: 20px;
+          max-width: 500px;
+          width: 100%;
+          height: 100%;
+          z-index: 6;
+          outline: none;
+          text-align: center;
+          font-size: 1.5rem;
+        }
+      }
+
+      > div {
+        position: fixed;
+        top: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        background-color: #fff;
+        width: 100vw;
+        height: 100vh;
+        padding: 7rem 0;
+        z-index: 5;
+
+        ul {
+          max-height: 400px;
+          overflow: scroll;
+        }
+      }
     }
   }
-}
-#xxx {
-  background-color: #fff;
-  position: absolute;
-  bottom: 20%;
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 9999;
-  overflow: hidden;
-  width: 3rem;
-  height: 3rem;
-  border-radius: 50%;
-}
-#bg {
-  position: absolute;
-  content: "";
-  width: 100%;
-  height: 100%;
-  z-index: 1;
-}
-/* we will explain what these classes do next! */
-// .v-enter-active {
-//   transition: opacity 0.5s step-end;
-// }
-// .v-leave-active {
-//   transition: opacity 0.1s ease;
-// }
 
-// .v-enter-from,
-// .v-leave-to {
-//   opacity: 0;
-// }
+  #nav {
+    position: fixed;
+    top: 2rem;
+    left: 1rem;
+    z-index: 3;
+    font-size: 3rem;
+  }
+}
+.ae {
+  padding: 10px;
+  cursor: pointer;
+  text-align: center;
+}
 </style>
