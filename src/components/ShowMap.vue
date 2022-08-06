@@ -21,11 +21,14 @@
       <div v-show="this.$store.state.searchBar">
         <ul>
           <li
-            v-for="list in this.$store.state.positions"
-            :key="list"
+            v-for="(list, i) in this.$store.state.positions"
+            :key="i"
             @click="this.$store.state.searchBar = !this.$store.state.searchBar"
           >
-            <div v-if="list.place_name.includes(this.keywordSearch)" class="ae">
+            <div
+              v-show="list.place_name.includes(this.keywordSearch)"
+              class="ae"
+            >
               {{ list.place_name }}
             </div>
           </li>
@@ -260,6 +263,8 @@ export default {
           map.panTo(moveLatLng);
         });
       });
+      // const goToPlace = document.querySelectorAll(".ae");
+      // goToPlace.addEventListener("click", function () {});
 
       kakao.maps.event.addListener(map, "click", function () {
         store.state.searchBar = false;
