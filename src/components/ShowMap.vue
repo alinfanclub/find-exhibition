@@ -15,7 +15,7 @@
           />
         </form>
         <div id="nav" v-show="!this.$store.state.searchBar">
-          <ion-icon name="menu"></ion-icon>
+          <ion-icon name="menu" @click="menuToggle"></ion-icon>
         </div>
       </div>
       <div v-show="this.$store.state.searchBar">
@@ -252,17 +252,19 @@ export default {
           console.log(store.state.closeBtn);
           store.state.closeBtn = true;
         });
-      }
-      const goToPlace = document.querySelectorAll(".ae");
-      goToPlace.forEach(function (event, index) {
-        var moveLatLng = new kakao.maps.LatLng(
-          store.state.positions[index].lat,
-          store.state.positions[index].lng
-        );
-        event.addEventListener("click", function () {
-          map.panTo(moveLatLng);
+
+        const goToPlace = document.querySelectorAll(".ae");
+        goToPlace.forEach(function (event, index) {
+          var moveLatLng = new kakao.maps.LatLng(
+            store.state.positions[index].lat,
+            store.state.positions[index].lng
+          );
+          event.addEventListener("click", function () {
+            map.panTo(moveLatLng);
+          });
         });
-      });
+      }
+
       // const goToPlace = document.querySelectorAll(".ae");
       // goToPlace.addEventListener("click", function () {});
 
@@ -273,7 +275,11 @@ export default {
     focusOut() {
       if (this.$store.state.searchBar == false) {
         document.querySelector("#searchArea").blur();
+        this.keywordSearch = "";
       }
+    },
+    menuToggle() {
+      this.$store.state.menuActive = !this.$store.state.menuActive;
     },
   },
 };

@@ -156,7 +156,7 @@
 
   #myCenter {
     position: absolute;
-    z-index: 99;
+    z-index: 46;
     bottom: 2rem;
     right: 2rem;
     display: flex;

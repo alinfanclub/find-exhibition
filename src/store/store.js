@@ -16,6 +16,7 @@ export default createStore({
     closeBtn: false,
     localIconShow: true,
     searchBar: false,
+    menuActive: false,
   },
   actions,
   mutations,

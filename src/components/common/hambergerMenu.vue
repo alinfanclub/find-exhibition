@@ -1,7 +1,9 @@
 <template>
-  <div id="container">
-    <li>카페 지도</li>
-    <li>전시 지도</li>
+  <div id="co">
+    <ul>
+      <li>카페 지도</li>
+      <li>전시 지도</li>
+    </ul>
   </div>
 </template>
 
@@ -16,8 +18,10 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-#container {
+#co {
   ul {
+    display: flex;
+    flex-direction: column;
     li {
       padding: 1rem 0;
       text-align: center;
