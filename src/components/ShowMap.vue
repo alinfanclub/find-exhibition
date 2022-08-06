@@ -23,7 +23,10 @@
           <li
             v-for="(list, i) in this.$store.state.positions"
             :key="i"
-            @click="this.$store.state.searchBar = !this.$store.state.searchBar"
+            @click="
+              (this.$store.state.searchBar = !this.$store.state.searchBar),
+                initText()
+            "
           >
             <div
               v-show="list.place_name.includes(this.keywordSearch)"
@@ -280,6 +283,9 @@ export default {
     },
     menuToggle() {
       this.$store.state.menuActive = !this.$store.state.menuActive;
+    },
+    initText() {
+      this.keywordSearch = "";
     },
   },
 };
