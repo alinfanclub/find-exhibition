@@ -3,6 +3,7 @@
     <ul>
       <li>카페 지도</li>
       <li>전시 지도</li>
+      <li>test</li>
     </ul>
   </div>
 </template>
