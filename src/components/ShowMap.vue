@@ -6,10 +6,7 @@
           <input
             type="text"
             v-model="this.keywordSearch"
-            @click="
-              (this.$store.state.searchBar = !this.$store.state.searchBar),
-                focusOut()
-            "
+            @click="serchBarEventHandler"
             id="searchArea"
             autocomplete="off"
           />
@@ -64,6 +61,7 @@ export default {
     };
   },
   mounted() {
+    // ! 카카오맵 초기 설청 -------------------------------------------------
     if (window.kakao && window.kakao.maps) {
       this.initMap();
     } else {
@@ -80,7 +78,7 @@ export default {
       this.$store.state.keyword = this.keywordSearch;
       this.initMap();
     },
-    // 맵 초기 셋팅 ---------------------------------------------------------------------
+    // !맵 초기 셋팅 ---------------------------------------------------------------------
     initMap() {
       const container = document.getElementById("map");
       const options = {
@@ -92,30 +90,26 @@ export default {
       };
       const map = new kakao.maps.Map(container, options);
       this.map = map;
-      //--------------------------------------------------------------------------------
-      // 내 위치 마커
-      //--------------------------------------------------------------------------------
+      // !--------------------------------------------------------------------------------
+      // !내 위치 마커
+      // !--------------------------------------------------------------------------------
       document
         .querySelector("#getCenter")
         .addEventListener("click", function () {
           store.state.localIconShow = false;
+          // * 위치 얻어오기
           if (navigator.geolocation) {
-            // GeoLocation을 이용해서 접속 위치를 얻어옵니다
             navigator.geolocation.getCurrentPosition(function (position) {
-              var Mylat = position.coords.latitude, // 위도
-                Mylon = position.coords.longitude; // 경도
+              var Mylat = position.coords.latitude,
+                Mylon = position.coords.longitude;
 
-              var locPosition = new kakao.maps.LatLng(Mylat, Mylon); // 인포윈도우에 표시될 내용입니다
-
-              // 마커와 인포윈도우를 표시합니다
-              displayMarker2(locPosition);
+              var locPosition = new kakao.maps.LatLng(Mylat, Mylon);
+              displayMarker2(locPosition); //* 위치 마커 생성하는 함수
             });
           } else {
-            // HTML5의 GeoLocation을 사용할 수 없을때 마커 표시 위치와 인포윈도우 내용을 설정합니다
-
             var locPosition = new kakao.maps.LatLng(33.450701, 126.570667);
 
-            displayMarker2(locPosition);
+            displayMarker2(locPosition); // * 실행이 실패하면 설정한 좌표값에 표시
           }
           var imageSrc =
             "https://www.citypng.com/public/uploads/small/11641513638sanpg6vtthzma5pmyxbnbe0sfhpnqdawfg2pjpzl11hkj9qhwbj7g0ektsxgghfjeml4jehzbjkaujbydzfrhf4nb9agagomf0yz.png";
@@ -147,29 +141,24 @@ export default {
               });
           }
         });
-      // 마커 셋팅  ---------------------------------------------------------------------
+      // ! 전시장소 마커 셋팅  ---------------------------------------------------------------------
       var imageSrc =
         "https://cdn.iconscout.com/icon/free/png-256/pin-locate-marker-location-navigation-7-16347.png";
       for (var i = 0; i < this.$store.state.positions.length; i++) {
-        // 마커 이미지의 이미지 크기
-        var imageSize = new kakao.maps.Size(40, 40);
+        var imageSize = new kakao.maps.Size(40, 40); // * 마커 이미지의 이미지 크기
 
-        // 마커 이미지를 생성
-        var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize);
+        var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize); // * 마커 이미지를 생성
 
-        // 마커위치 지정
-        displayMarker(this.$store.state.positions[i]);
+        displayMarker(this.$store.state.positions[i]); // * 해당 위치들에 마커 표시
       }
-      // 지도에 마커를 표시하는 함수입니다
       function displayMarker(place) {
-        // 마커를 생성하고 지도에 표시합니다
+        //* place = 위에서 받아온 위치정보 인자
         var marker = new kakao.maps.Marker({
           map: map,
           position: new kakao.maps.LatLng(place.lat, place.lng),
           image: markerImage,
         });
-        // 커스텀 오버레이 셋팅  ---------------------------------------------------------------------
-        // 콘텐츠
+        // ! 커스텀 오버레이 셋팅  ---------------------------------------------------------------------
         let content = document.createElement("div");
 
         let header = document.createElement("div");
@@ -241,22 +230,24 @@ export default {
         info.className = "info";
         close.name = "close-outline";
         close.className = "close-btn";
-        //오버레이 생성-----------------------------------------------------
+        // !오버레이 생성-----------------------------------------------------
         var overlay = new kakao.maps.CustomOverlay({
           content: content,
           map: map,
+          // * 마커들의 위치를 가져온다.
           position: marker.getPosition(),
         });
-        //초기 오버레이 닫은 상태로 시작하기 위해 추가.
         overlay.setMap(null);
+        // ! 초기 오버레이 닫은 상태로 시작하기 위해 추가.
         kakao.maps.event.addListener(marker, "click", function () {
           overlay.setMap(map);
-          map.panTo(this.getPosition(store.state.setLevel));
-          console.log(store.state.closeBtn);
+          map.panTo(this.getPosition());
           store.state.closeBtn = true;
         });
-
+        // ! 장소 검색하고 리시트 클릭시 해당 마커로 이동
+        // TODO 클래스 이름 변경하기
         const goToPlace = document.querySelectorAll(".ae");
+        // * li tag 클릭시 이벤트 추가
         goToPlace.forEach(function (event, index) {
           var moveLatLng = new kakao.maps.LatLng(
             store.state.positions[index].lat,
@@ -267,25 +258,29 @@ export default {
           });
         });
       }
-
-      // const goToPlace = document.querySelectorAll(".ae");
-      // goToPlace.addEventListener("click", function () {});
-
-      kakao.maps.event.addListener(map, "click", function () {
-        store.state.searchBar = false;
-      });
     },
-    focusOut() {
-      if (this.$store.state.searchBar == false) {
-        document.querySelector("#searchArea").blur();
-        this.keywordSearch = "";
-      }
-    },
+    //* 메뉴 바 토글
     menuToggle() {
       this.$store.state.menuActive = !this.$store.state.menuActive;
     },
+    // * 검색한 결과 클릭시 인풋 값 초기화 하는 함수
     initText() {
       this.keywordSearch = "";
+    },
+    // * 검색창 로직
+    serchBarEventHandler() {
+      if (this.$store.state.searchBar == false && this.keywordSearch == "") {
+        this.$store.state.searchBar = true;
+      } else if (
+        this.$store.state.searchBar == true &&
+        this.keywordSearch != ""
+      ) {
+        this.$store.state.searchBar = true;
+      } else {
+        this.$store.state.searchBar = false;
+        document.querySelector("#searchArea").blur();
+        this.keywordSearch = "";
+      }
     },
   },
 };

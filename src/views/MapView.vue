@@ -59,7 +59,7 @@ export default {
 .menu-content {
   background: #fff;
   position: absolute;
-  width: 40%;
+  width: 400px;
   height: 100vh;
   top: 0;
   left: -100%;
@@ -78,5 +78,11 @@ export default {
   width: 100%;
   height: 100%;
   background-color: rgba(7, 7, 7, 0.294);
+}
+
+@media screen and (max-width: 1000px) {
+  .menu-content {
+    width: 50%;
+  }
 }
 </style>
