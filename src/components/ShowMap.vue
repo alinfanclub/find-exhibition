@@ -99,7 +99,7 @@ export default {
           store.state.localIconShow = false;
           // * 위치 얻어오기
           if (navigator.geolocation) {
-            navigator.geolocation.watchPosition(function (position) {
+            navigator.geolocation.getCurrentPosition(function (position) {
               var Mylat = position.coords.latitude,
                 Mylon = position.coords.longitude;
 

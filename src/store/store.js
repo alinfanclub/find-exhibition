@@ -17,6 +17,8 @@ export default createStore({
     localIconShow: true,
     searchBar: false,
     menuActive: false,
+    lat: "",
+    lon: "",
   },
   actions,
   mutations,
