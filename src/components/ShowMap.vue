@@ -99,7 +99,7 @@ export default {
           store.state.localIconShow = false;
           // * 위치 얻어오기
           if (navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition(function (position) {
+            navigator.geolocation.watchPosition(function (position) {
               var Mylat = position.coords.latitude,
                 Mylon = position.coords.longitude;
 
@@ -204,7 +204,11 @@ export default {
           "," +
           store.state.positions[i].lng;
         contentRoute.target = "_blank";
-        contentRoute.appendChild(document.createTextNode("길찾기"));
+
+        let findLoadIcon = document.createElement("ion-icon");
+        findLoadIcon.name = "train-outline";
+
+        contentRoute.appendChild(findLoadIcon);
 
         let label = document.createElement("div");
         label.appendChild(
