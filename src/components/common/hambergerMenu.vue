@@ -3,7 +3,6 @@
     <ul>
       <li @click="CloseMenu"><router-link to="/">전시장지도</router-link></li>
       <li @click="CloseMenu"><router-link to="/cafe">카페지도</router-link></li>
-      <li>test</li>
     </ul>
   </div>
 </template>

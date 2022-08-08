@@ -38,10 +38,10 @@
     <div class="map_wrap">
       <div id="map"></div>
       <div id="myCenter" v-show="!this.$store.state.searchBar">
-        <div v-show="this.$store.state.localIconShow == true">
+        <div v-show="this.$store.state.cafeLocalIconShow == true">
           <ion-icon name="location" id="getCenter"></ion-icon>
         </div>
-        <div v-show="this.$store.state.localIconShow == false">
+        <div v-show="this.$store.state.cafeLocalIconShow == false">
           <ion-icon name="location-outline" id="hideMyCenter"></ion-icon>
         </div>
       </div>
@@ -96,7 +96,7 @@ export default {
       document
         .querySelector("#getCenter")
         .addEventListener("click", function () {
-          store.state.localIconShow = false;
+          store.state.cafeLocalIconShow = false;
           // * 위치 얻어오기
           if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition(function (position) {
@@ -174,23 +174,23 @@ export default {
         let title = document.createElement("div");
 
         let link = document.createElement("a");
-        link.href = store.state.positions[i].url;
+        link.href = store.state.cafePositions[i].url;
         link.target = "_blank";
         link.appendChild(
-          document.createTextNode(`${store.state.positions[i].place_name}`)
+          document.createTextNode(`${store.state.cafePositions[i].place_name}`)
         );
 
         let adress = document.createElement("div");
 
         let adressP = document.createElement("p");
         adressP.appendChild(
-          document.createTextNode(`${store.state.positions[i].adress}`)
+          document.createTextNode(`${store.state.cafePositions[i].adress}`)
         );
         let subBtnArea = document.createElement("div");
         subBtnArea.className = "sub-btn-area";
 
         let moreInfo = document.createElement("a");
-        moreInfo.href = "/space/" + store.state.positions[i].id;
+        moreInfo.href = "/space/" + store.state.cafePositions[i].id;
         moreInfo.appendChild(document.createTextNode("더보기"));
 
         let contect = document.createElement("div");
@@ -198,11 +198,11 @@ export default {
         let contentRoute = document.createElement("a");
         contentRoute.href =
           "https://map.kakao.com/link/to/" +
-          store.state.positions[i].place_name +
+          store.state.cafePositions[i].place_name +
           "," +
-          store.state.positions[i].lat +
+          store.state.cafePositions[i].lat +
           "," +
-          store.state.positions[i].lng;
+          store.state.cafePositions[i].lng;
         contentRoute.target = "_blank";
 
         let findLoadIcon = document.createElement("ion-icon");
@@ -212,7 +212,7 @@ export default {
 
         let label = document.createElement("div");
         label.appendChild(
-          document.createTextNode(store.state.positions[i].label)
+          document.createTextNode(store.state.cafePositions[i].label)
         );
 
         content.appendChild(info);
@@ -254,8 +254,8 @@ export default {
         // * li tag 클릭시 이벤트 추가
         goToPlace.forEach(function (event, index) {
           var moveLatLng = new kakao.maps.LatLng(
-            store.state.positions[index].lat,
-            store.state.positions[index].lng
+            store.state.cafePositions[index].lat,
+            store.state.cafePositions[index].lng
           );
           event.addEventListener("click", function () {
             map.panTo(moveLatLng);

@@ -17,6 +17,7 @@ export default createStore({
     spaceData: [],
     closeBtn: false,
     localIconShow: true,
+    cafeLocalIconShow: true,
     searchBar: false,
     menuActive: false,
     lat: "",

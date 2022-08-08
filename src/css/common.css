@@ -106,7 +106,7 @@
     position: absolute; 
     left: 50%; 
     transform: translateX(-50%);
-    bottom: -8%;
+    bottom: -7%;
      width: 33px;
      height: 18px;
      background: url('https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/vertex_white.png');
@@ -121,6 +121,16 @@
     box-sizing: border-box;
     box-shadow:2px 1px 5px #b5b5b5;
   }
+  .info .title {
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  /* .info .title:hover {
+    display: flex;
+    flex-wrap: wrap;
+    white-space: normal;
+    width: 100%;
+  } */
   .info .adress {
     width: 100%;
     padding: 1rem 0;
