@@ -2,11 +2,15 @@ import { createRouter, createWebHistory } from "vue-router";
 const routes = [
   {
     path: "/",
-    component: () => import("@/views/MapView.vue"),
+    component: () => import("@/components/SpaceMap.vue"),
   },
   {
     path: "/space/:id",
     component: () => import("@/views/InfoSpaceView.vue"),
+  },
+  {
+    path: "/cafe",
+    component: () => import("@/components/cafaMap.vue"),
   },
 ];
 

@@ -13,17 +13,15 @@
       ></hamberger-menu>
       <div id="bgBox" @click="closeMenu"></div>
     </div>
-    <show-map></show-map>
+    <router-view></router-view>
   </div>
 </template>
 
 <script>
 import HambergerMenu from "@/components/common/hambergerMenu.vue";
-import ShowMap from "@/components/ShowMap.vue";
 export default {
-  name: "MapView",
+  name: "WholeMap",
   components: {
-    ShowMap,
     HambergerMenu,
   },
   methods: {

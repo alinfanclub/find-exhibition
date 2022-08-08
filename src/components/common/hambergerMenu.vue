@@ -1,8 +1,8 @@
 <template>
   <div id="co">
     <ul>
-      <li>카페 지도</li>
-      <li>전시 지도</li>
+      <li @click="CloseMenu"><router-link to="/">전시장지도</router-link></li>
+      <li @click="CloseMenu"><router-link to="/cafe">카페지도</router-link></li>
       <li>test</li>
     </ul>
   </div>
@@ -14,6 +14,11 @@ export default {
     return {
       keywordSearch: "",
     };
+  },
+  methods: {
+    CloseMenu() {
+      this.$store.state.menuActive = false;
+    },
   },
 };
 </script>

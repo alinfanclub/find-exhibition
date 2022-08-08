@@ -1,7 +1,15 @@
 <template>
-  <router-view />
+  <whole-map-view></whole-map-view>
 </template>
-<script></script>
+<script>
+import WholeMapView from "./views/WholeMapView.vue";
+
+export default {
+  components: {
+    WholeMapView,
+  },
+};
+</script>
 
 <style>
 * {
