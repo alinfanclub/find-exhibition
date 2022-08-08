@@ -104,18 +104,18 @@ export default {
                 Mylon = position.coords.longitude;
 
               var locPosition = new kakao.maps.LatLng(Mylat, Mylon);
-              displayMarker2(locPosition); //* 위치 마커 생성하는 함수
+              displayMarker3(locPosition); //* 위치 마커 생성하는 함수
             });
           } else {
             var locPosition = new kakao.maps.LatLng(33.450701, 126.570667);
 
-            displayMarker2(locPosition); // * 실행이 실패하면 설정한 좌표값에 표시
+            displayMarker3(locPosition); // * 실행이 실패하면 설정한 좌표값에 표시
           }
           var imageSrc =
             "https://www.citypng.com/public/uploads/small/11641513638sanpg6vtthzma5pmyxbnbe0sfhpnqdawfg2pjpzl11hkj9qhwbj7g0ektsxgghfjeml4jehzbjkaujbydzfrhf4nb9agagomf0yz.png";
           var imageSize = new kakao.maps.Size(20, 20);
           var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize);
-          function displayMarker2(locPosition) {
+          function displayMarker3(locPosition) {
             // 마커를 생성합니다
             var marker = new kakao.maps.Marker({
               map: map,
@@ -128,7 +128,7 @@ export default {
 
             kakao.maps.event.addListener(marker, "click", function () {
               marker.setMap(null);
-              store.state.localIconShow = true;
+              store.state.cafeLocalIconShow = true;
             });
 
             document
