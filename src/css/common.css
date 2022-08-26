@@ -189,3 +189,11 @@
     font-size: 2rem;
     padding: .5rem;
   }
+
+  .hi {
+    color: yellow;
+    z-index: 9999;
+    background-color: #000;
+    top: 50%;
+    left: 50%;
+  }

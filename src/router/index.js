@@ -2,6 +2,10 @@ import { createRouter, createWebHistory } from "vue-router";
 const routes = [
   {
     path: "/",
+    redirect: "/space",
+  },
+  {
+    path: "/space",
     component: () => import("@/components/SpaceMap.vue"),
   },
   {
@@ -11,6 +15,10 @@ const routes = [
   {
     path: "/cafe",
     component: () => import("@/components/cafaMap.vue"),
+  },
+  {
+    path: "/:catchAll(.*)",
+    component: () => import("@/views/NotFoundPage.vue"),
   },
 ];
 

@@ -1,5 +1,5 @@
 <template>
-  <div id="container">
+  <div id="Infocontainer">
     <div id="header">
       <div>{{ this.$store.state.spaceData.place_name }}</div>
       <div>{{ this.$store.state.spaceData.adress }}</div>
@@ -38,13 +38,18 @@ export default {
 </script>
 
 <style scoped lang="scss">
-#container {
+#Infocontainer {
   margin: 0 auto;
   padding: 0 1rem;
   box-sizing: border-box;
   max-width: 30em;
   width: 100%;
   font-size: 0.8rem;
+  position: absolute;
+  top: 0%;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 99;
 
   #header {
     display: flex;

@@ -1,5 +1,6 @@
 <template>
   <div>
+    <router-view></router-view>
     <div
       id="wrap"
       :class="{
@@ -11,9 +12,12 @@
         class="menu-content"
         :class="{ menuContentActive: this.$store.state.menuActive === true }"
       ></hamberger-menu>
-      <div id="bgBox" @click="closeMenu"></div>
+      <div
+        id="bgBox"
+        @click="closeMenu"
+        v-show="this.$store.state.menuActive === true"
+      ></div>
     </div>
-    <router-view></router-view>
   </div>
 </template>
 
@@ -37,7 +41,7 @@ export default {
   display: flex;
   width: 100vw;
   height: 100vh;
-  position: fixed;
+  position: absolute;
   top: 0;
   left: 0%;
   z-index: 0;
@@ -76,6 +80,7 @@ export default {
   width: 100%;
   height: 100%;
   background-color: rgba(7, 7, 7, 0.294);
+  z-index: 1;
 }
 
 @media screen and (max-width: 1000px) {

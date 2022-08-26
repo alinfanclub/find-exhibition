@@ -262,6 +262,33 @@ export default {
           });
         });
       }
+
+      var cm = new kakao.maps.Marker({
+        // 지도 중심좌표에 마커를 생성합니다
+        position: store.state.np,
+      });
+      // 지도에 마커를 표시합니다
+      cm.setMap(map);
+      var con = document.createElement("div");
+      con.appendChild(document.createTextNode("here!"));
+
+      var cus = new kakao.maps.CustomOverlay({
+        position: cm.getPosition(),
+        content: con,
+        map: map,
+      });
+
+      kakao.maps.event.addListener(map, "click", function (c) {
+        var p = c.latLng;
+        store.state.np = p;
+        console.log(store.state.np);
+
+        cm.setPosition(store.state.np);
+      });
+      kakao.maps.event.addListener(cm, "click", function () {
+        cus.setMap(map);
+        console.log(this.getPosition());
+      });
     },
     //* 메뉴 바 토글
     menuToggle() {

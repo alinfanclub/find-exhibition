@@ -22,6 +22,11 @@ export default createStore({
     menuActive: false,
     lat: "",
     lon: "",
+    np: "",
+    ns: {
+      la: 35.1775975996367,
+      ma: 129.1154036580446,
+    },
   },
   actions,
   mutations,
