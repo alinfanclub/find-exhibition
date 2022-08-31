@@ -8,4 +8,8 @@ function fectchSpaceList(id) {
   return axios.get(`${config.baseUrl}/space/${id}.json`);
 }
 
-export { fectchSpaceList };
+function fectchMarkersSpace() {
+  return axios.get(`${config.baseUrl}/space/markers.json`);
+}
+
+export { fectchSpaceList, fectchMarkersSpace };

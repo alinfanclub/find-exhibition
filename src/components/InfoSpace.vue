@@ -31,7 +31,6 @@ export default {
   props: {},
   created() {
     const url = this.$route.params.id;
-    console.log(this.$route.params.id);
     this.$store.dispatch("FETCH_DATA", url);
   },
 };

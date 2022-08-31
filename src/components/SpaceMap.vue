@@ -18,7 +18,7 @@
       <div v-show="this.$store.state.searchBar">
         <ul>
           <li
-            v-for="(list, i) in this.$store.state.positions"
+            v-for="(list, i) in this.$store.state.markersSpace"
             :key="i"
             @click="
               (this.$store.state.searchBar = !this.$store.state.searchBar),
@@ -51,6 +51,7 @@
 
 <script>
 import store from "@/store/store";
+import { mapState } from "vuex";
 export default {
   name: "KakaoMap",
   data() {
@@ -59,6 +60,17 @@ export default {
       keywordSearch: "",
       closeBtn: false,
     };
+  },
+  created() {
+    this.$store.dispatch("FETCH_MARKERS_SPACE");
+  },
+  computed: {
+    ...mapState(["isOK"]),
+  },
+  watch: {
+    isOK: function () {
+      this.initMap();
+    },
   },
   mounted() {
     // ! 카카오맵 초기 설청 -------------------------------------------------
@@ -87,9 +99,16 @@ export default {
           this.$store.state.mainLocation.lng
         ),
         level: this.$store.state.viewLevel,
+        disableDoubleClickZoom: true,
       };
       const map = new kakao.maps.Map(container, options);
       this.map = map;
+
+      // var clusterer = new kakao.maps.MarkerClusterer({
+      //   map: map, // 마커들을 클러스터로 관리하고 표시할 지도 객체
+      //   averageCenter: true, // 클러스터에 포함된 마커들의 평균 위치를 클러스터 마커 위치로 설정
+      //   minLevel: 10, // 클러스터 할 최소 지도 레벨
+      // });
       // !--------------------------------------------------------------------------------
       // !내 위치 마커
       // !--------------------------------------------------------------------------------
@@ -144,12 +163,12 @@ export default {
       // ! 전시장소 마커 셋팅  ---------------------------------------------------------------------
       var imageSrc =
         "https://cdn.iconscout.com/icon/free/png-256/pin-locate-marker-location-navigation-7-16347.png";
-      for (var i = 0; i < this.$store.state.positions.length; i++) {
+      for (var i = 0; i < this.$store.state.markersSpace.length; i++) {
         var imageSize = new kakao.maps.Size(40, 40); // * 마커 이미지의 이미지 크기
 
         var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize); // * 마커 이미지를 생성
 
-        displayMarker(this.$store.state.positions[i]); // * 해당 위치들에 마커 표시
+        displayMarker(this.$store.state.markersSpace[i]); // * 해당 위치들에 마커 표시
       }
       function displayMarker(place) {
         //* place = 위에서 받아온 위치정보 인자
@@ -174,23 +193,23 @@ export default {
         let title = document.createElement("div");
 
         let link = document.createElement("a");
-        link.href = store.state.positions[i].url;
+        link.href = store.state.markersSpace[i].url;
         link.target = "_blank";
         link.appendChild(
-          document.createTextNode(`${store.state.positions[i].place_name}`)
+          document.createTextNode(`${store.state.markersSpace[i].place_name}`)
         );
 
         let adress = document.createElement("div");
 
         let adressP = document.createElement("p");
         adressP.appendChild(
-          document.createTextNode(`${store.state.positions[i].adress}`)
+          document.createTextNode(`${store.state.markersSpace[i].adress}`)
         );
         let subBtnArea = document.createElement("div");
         subBtnArea.className = "sub-btn-area";
 
         let moreInfo = document.createElement("a");
-        moreInfo.href = "/space/" + store.state.positions[i].id;
+        moreInfo.href = "/space/" + store.state.markersSpace[i].id;
         moreInfo.appendChild(document.createTextNode("더보기"));
 
         let contect = document.createElement("div");
@@ -198,11 +217,11 @@ export default {
         let contentRoute = document.createElement("a");
         contentRoute.href =
           "https://map.kakao.com/link/to/" +
-          store.state.positions[i].place_name +
+          store.state.markersSpace[i].place_name +
           "," +
-          store.state.positions[i].lat +
+          store.state.markersSpace[i].lat +
           "," +
-          store.state.positions[i].lng;
+          store.state.markersSpace[i].lng;
         contentRoute.target = "_blank";
 
         let findLoadIcon = document.createElement("ion-icon");
@@ -212,7 +231,7 @@ export default {
 
         let label = document.createElement("div");
         label.appendChild(
-          document.createTextNode(store.state.positions[i].label)
+          document.createTextNode(store.state.markersSpace[i].label)
         );
 
         content.appendChild(info);
@@ -240,6 +259,7 @@ export default {
           map: map,
           // * 마커들의 위치를 가져온다.
           position: marker.getPosition(),
+          zIndex: 10,
         });
         overlay.setMap(null);
         // ! 초기 오버레이 닫은 상태로 시작하기 위해 추가.
@@ -254,8 +274,8 @@ export default {
         // * li tag 클릭시 이벤트 추가
         goToPlace.forEach(function (event, index) {
           var moveLatLng = new kakao.maps.LatLng(
-            store.state.positions[index].lat,
-            store.state.positions[index].lng
+            store.state.markersSpace[index].lat,
+            store.state.markersSpace[index].lng
           );
           event.addEventListener("click", function () {
             map.panTo(moveLatLng);
@@ -273,21 +293,23 @@ export default {
       con.appendChild(document.createTextNode("here!"));
 
       var cus = new kakao.maps.CustomOverlay({
-        position: cm.getPosition(),
+        position: new kakao.maps.LatLng(35.1775975996367, 129.1154036580446),
         content: con,
         map: map,
       });
 
-      kakao.maps.event.addListener(map, "click", function (c) {
+      kakao.maps.event.addListener(map, "dblclick", function (c) {
         var p = c.latLng;
         store.state.np = p;
         console.log(store.state.np);
-
         cm.setPosition(store.state.np);
+        cus.setMap(null);
       });
+      cus.setMap(null);
       kakao.maps.event.addListener(cm, "click", function () {
         cus.setMap(map);
         console.log(this.getPosition());
+        cus.setPosition(store.state.np);
       });
     },
     //* 메뉴 바 토글
