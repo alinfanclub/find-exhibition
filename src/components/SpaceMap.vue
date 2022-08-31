@@ -283,35 +283,55 @@ export default {
         });
       }
 
-      var cm = new kakao.maps.Marker({
+      var addMarker = new kakao.maps.Marker({
         // 지도 중심좌표에 마커를 생성합니다
         position: store.state.np,
       });
       // 지도에 마커를 표시합니다
-      cm.setMap(map);
-      var con = document.createElement("div");
-      con.appendChild(document.createTextNode("here!"));
+      // ! 위치 추가 오버레이 생성-----------------------------------------------------
+      addMarker.setMap(map);
+      let con = document.createElement("div");
+      con.className = "add-marker-container";
+      let conInner = document.createElement("div");
+      let conHeader = document.createElement("div");
+      conHeader.className = "con-header";
+      let conTitle = document.createElement("h1");
+      conTitle.appendChild(document.createTextNode("장소 저장하기"));
+      let addMarkercloseBtn = document.createElement("ion-icon");
+      addMarkercloseBtn.onclick = () => {
+        addMarkerOverlay.setMap(null);
+      };
+      addMarkercloseBtn.name = "close-outline";
+      addMarkercloseBtn.className = "close-btn";
 
-      var cus = new kakao.maps.CustomOverlay({
+      con.appendChild(conInner);
+      conInner.appendChild(conHeader);
+      conHeader.appendChild(conTitle);
+      conHeader.appendChild(addMarkercloseBtn);
+
+      let addMarkerOverlay = new kakao.maps.CustomOverlay({
         position: new kakao.maps.LatLng(35.1775975996367, 129.1154036580446),
         content: con,
         map: map,
       });
-
+      // ! 맵 클릭시 장소 추가 마커 생성
       kakao.maps.event.addListener(map, "dblclick", function (c) {
         var p = c.latLng;
         store.state.np = p;
         console.log(store.state.np);
-        cm.setPosition(store.state.np);
-        cus.setMap(null);
+        addMarker.setPosition(store.state.np);
+        addMarkerOverlay.setMap(null);
       });
-      cus.setMap(null);
-      kakao.maps.event.addListener(cm, "click", function () {
-        cus.setMap(map);
+      addMarkerOverlay.setMap(null);
+      // ! 맵 클릭시 장소 추가 커스텀 오버레이 생성
+      kakao.maps.event.addListener(addMarker, "click", function () {
+        addMarkerOverlay.setMap(map);
         console.log(this.getPosition());
-        cus.setPosition(store.state.np);
+        addMarkerOverlay.setPosition(store.state.np);
+        map.panTo(this.getPosition());
       });
     },
+    // ! new method start
     //* 메뉴 바 토글
     menuToggle() {
       this.$store.state.menuActive = !this.$store.state.menuActive;

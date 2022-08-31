@@ -197,3 +197,20 @@
     top: 50%;
     left: 50%;
   }
+  .add-marker-container {
+    width: 300px;
+    height: 500px;
+    background-color: #fff;
+    position: absolute;
+    transform: translate(-50%, -50%);
+  }
+  .con-header {
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .add-marker-container  .con-header .close-btn {
+    font-size: 2rem;
+    cursor: pointer;
+  }
