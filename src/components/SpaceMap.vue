@@ -288,26 +288,37 @@ export default {
         position: store.state.np,
       });
       // 지도에 마커를 표시합니다
-      // ! 위치 추가 오버레이 생성-----------------------------------------------------
       addMarker.setMap(map);
+      addMarker.setDraggable(true);
+      // ! 위치 추가 오버레이 생성-----------------------------------------------------
       let con = document.createElement("div");
       con.className = "add-marker-container";
       let conInner = document.createElement("div");
       let conHeader = document.createElement("div");
       conHeader.className = "con-header";
       let conTitle = document.createElement("h1");
-      conTitle.appendChild(document.createTextNode("장소 저장하기"));
-      let addMarkercloseBtn = document.createElement("ion-icon");
+      conTitle.appendChild(document.createTextNode("장소를 등록 하세요!"));
+      let addMarkercloseBtn = document.createElement("button");
+      addMarkercloseBtn.appendChild(document.createTextNode("취소"));
       addMarkercloseBtn.onclick = () => {
         addMarkerOverlay.setMap(null);
       };
       addMarkercloseBtn.name = "close-outline";
       addMarkercloseBtn.className = "close-btn";
 
+      let conBody = document.createElement("div");
+      conBody.className = "con-body";
+      let agreeBtn = document.createElement("a");
+      agreeBtn.className = "agreeBtn";
+      agreeBtn.href = "/make";
+      agreeBtn.appendChild(document.createTextNode("등록"));
+
       con.appendChild(conInner);
       conInner.appendChild(conHeader);
+      conInner.appendChild(conBody);
       conHeader.appendChild(conTitle);
-      conHeader.appendChild(addMarkercloseBtn);
+      conBody.appendChild(agreeBtn);
+      conBody.appendChild(addMarkercloseBtn);
 
       let addMarkerOverlay = new kakao.maps.CustomOverlay({
         position: new kakao.maps.LatLng(35.1775975996367, 129.1154036580446),
@@ -329,6 +340,12 @@ export default {
         console.log(this.getPosition());
         addMarkerOverlay.setPosition(store.state.np);
         map.panTo(this.getPosition());
+      });
+      // ! 마커 드래그시 커스텀 오버레이 같이 이동
+      kakao.maps.event.addListener(addMarker, "dragend", function () {
+        console.log(this.getPosition());
+        store.state.np = this.getPosition();
+        addMarkerOverlay.setPosition(store.state.np);
       });
     },
     // ! new method start

@@ -20,6 +20,10 @@ const routes = [
     path: "/:catchAll(.*)",
     component: () => import("@/views/NotFoundPage.vue"),
   },
+  {
+    path: "/make",
+    component: () => import("@/views/makeMarkerView.vue"),
+  },
 ];
 
 const router = createRouter({
