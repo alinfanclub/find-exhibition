@@ -167,6 +167,7 @@ export default {
       this.imgName = [];
       console.log(this.sendData);
       console.log(111);
+      // this.$router.push("/");
     },
     saveT() {
       console.log("111");
