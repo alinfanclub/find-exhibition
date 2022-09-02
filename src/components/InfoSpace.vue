@@ -42,7 +42,6 @@ export default {
   padding: 0 1rem;
   box-sizing: border-box;
   max-width: 30em;
-  width: 100%;
   font-size: 0.8rem;
   position: absolute;
   top: 0%;
