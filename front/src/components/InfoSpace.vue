@@ -1,37 +1,47 @@
 <template>
   <div id="Infocontainer">
-    <div id="header">
-      <div>{{ this.$store.state.spaceData.place_name }}</div>
-      <div>{{ this.$store.state.spaceData.adress }}</div>
+    <div v-for="data in this.$store.state.markersSpace" :key="data">
+      <div v-if="data._id == this.$route.params.id">
+        <div>
+          {{ data._id }}
+        </div>
+        <div>
+          {{ data.place_name }}
+        </div>
+        <div>
+          {{ data.contents }}
+        </div>
+      </div>
     </div>
-    <div id="body">
-      <h3>최근 전시</h3>
-      <ul>
-        <li v-for="list in this.$store.state.spaceData.exhibition" :key="list">
-          <h4>{{ list.title }}</h4>
-          <p>{{ list.date }}</p>
-          <img :src="require(`../img/${list.detail.mainArt}`)" />
-          <!-- <img src="../img/LeeupanSpace_main.png" alt="" /> -->
-          <div>
-            <details>
-              <summary>더보기</summary>
-              <p>작품수 : {{ list.detail.artNum }}</p>
-              <p>장소 : {{ list.detail.artPlace }}</p>
-              <p v-html="list.detail.artText"></p>
-            </details>
-          </div>
-        </li>
-      </ul>
-    </div>
+    <button @click="deleteA(a)">x</button>
   </div>
 </template>
 
 <script>
+import { deleteMarker } from "@/api/index.js";
 export default {
   props: {},
+  data() {
+    return {
+      a: this.$route.params.id,
+    };
+  },
   created() {
-    const url = this.$route.params.id;
-    this.$store.dispatch("FETCH_DATA", url);
+    console.log(this.$route.params.id);
+    this.$store.dispatch("FETCH_MARKERS_SPACE");
+  },
+  methods: {
+    async deleteA(id) {
+      if (confirm("시를 삭제 한다구요??")) {
+        try {
+          await deleteMarker(id);
+        } catch (error) {
+          console.log(error);
+        }
+        // this.$store.dispatch("FETCH_MARKERS_SPAC");
+        this.$router.push("/space");
+      }
+    },
   },
 };
 </script>

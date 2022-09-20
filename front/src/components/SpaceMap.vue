@@ -62,6 +62,7 @@ export default {
     };
   },
   created() {
+    this.$store.state.insOK = true;
     this.$store.dispatch("FETCH_MARKERS_SPACE");
   },
   computed: {
@@ -193,8 +194,7 @@ export default {
         let title = document.createElement("div");
 
         let link = document.createElement("a");
-        link.href = store.state.markersSpace[i].url;
-        link.target = "_blank";
+        link.href = "/space/" + store.state.markersSpace[i]._id;
         link.appendChild(
           document.createTextNode(`${store.state.markersSpace[i].place_name}`)
         );
@@ -209,7 +209,7 @@ export default {
         subBtnArea.className = "sub-btn-area";
 
         let moreInfo = document.createElement("a");
-        moreInfo.href = "/space/" + store.state.markersSpace[i].id;
+        moreInfo.href = "/space/" + store.state.markersSpace[i]._id;
         moreInfo.appendChild(document.createTextNode("더보기"));
 
         let contect = document.createElement("div");
@@ -264,17 +264,17 @@ export default {
         });
         // ! 장소 검색하고 리시트 클릭시 해당 마커로 이동
         // TODO 클래스 이름 변경하기
-        const goToPlace = document.querySelectorAll(".ae");
-        // * li tag 클릭시 이벤트 추가
-        goToPlace.forEach(function (event, index) {
-          var moveLatLng = new kakao.maps.LatLng(
-            store.state.markersSpace[index].lat,
-            store.state.markersSpace[index].lng
-          );
-          event.addEventListener("click", function () {
-            map.panTo(moveLatLng);
-          });
-        });
+        // const goToPlace = document.querySelectorAll(".ae");
+        // // * li tag 클릭시 이벤트 추가
+        // goToPlace.forEach(function (event, index) {
+        //   var moveLatLng = new kakao.maps.LatLng(
+        //     store.state.markersSpace[index].lat,
+        //     store.state.markersSpace[index].lng
+        //   );
+        //   event.addEventListener("click", function () {
+        //     map.panTo(moveLatLng);
+        //   });
+        // });
       }
 
       var addMarker = new kakao.maps.Marker({
