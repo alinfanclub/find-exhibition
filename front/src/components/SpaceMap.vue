@@ -208,10 +208,6 @@ export default {
         let subBtnArea = document.createElement("div");
         subBtnArea.className = "sub-btn-area";
 
-        let moreInfo = document.createElement("a");
-        moreInfo.href = "/space/" + store.state.markersSpace[i]._id;
-        moreInfo.appendChild(document.createTextNode("더보기"));
-
         let contect = document.createElement("div");
 
         let contentRoute = document.createElement("a");
@@ -237,7 +233,6 @@ export default {
         header.appendChild(title);
         header.appendChild(close);
         subBtnArea.appendChild(contect);
-        subBtnArea.appendChild(moreInfo);
         contect.appendChild(contentRoute);
         title.appendChild(link);
 
@@ -296,6 +291,7 @@ export default {
       addMarkercloseBtn.appendChild(document.createTextNode("취소"));
       addMarkercloseBtn.onclick = () => {
         addMarkerOverlay.setMap(null);
+        addMarker.setMap(null);
       };
       addMarkercloseBtn.name = "close-outline";
       addMarkercloseBtn.className = "close-btn";
@@ -327,6 +323,7 @@ export default {
         localStorage.setItem("ma", store.state.np.La);
         console.log(store.state.np);
         console.log(store.state.np);
+        addMarker.setMap(map);
         addMarker.setPosition(store.state.np);
         addMarkerOverlay.setMap(null);
       });

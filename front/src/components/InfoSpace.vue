@@ -2,18 +2,22 @@
   <div id="Infocontainer">
     <div v-for="data in this.$store.state.markersSpace" :key="data">
       <div v-if="data._id == this.$route.params.id">
-        <div>
-          {{ data._id }}
-        </div>
-        <div>
-          {{ data.place_name }}
-        </div>
-        <div>
-          {{ data.contents }}
-        </div>
+        <header>
+          <h1>post</h1>
+          <button @click="deleteA(a)">x</button>
+        </header>
+        <body>
+          <img src="@/assets/logo.png" />
+          <div>
+            {{ data.place_name }}
+          </div>
+          <div>
+            {{ data.contents }}
+          </div>
+          <small>{{ data.createAt }}</small>
+        </body>
       </div>
     </div>
-    <button @click="deleteA(a)">x</button>
   </div>
 </template>
 
@@ -93,5 +97,13 @@ export default {
       margin: 20px 0;
     }
   }
+}
+header {
+  display: flex;
+  justify-content: space-between;
+  align-content: center;
+}
+body {
+  text-align: center;
 }
 </style>
