@@ -200,7 +200,6 @@
   }
   .add-marker-container {
     width: 15rem;
-    height: fit-content;
     background-color: #fff;
     position: absolute;
     transform: translate(-50%, -150%);
