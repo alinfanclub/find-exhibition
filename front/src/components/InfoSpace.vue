@@ -1,13 +1,15 @@
 <template>
   <div id="Infocontainer">
-    <div v-for="data in this.$store.state.markersSpace" :key="data">
-      <div v-if="data._id == this.$route.params.id">
-        <header>
-          <h1>post</h1>
-          <button @click="deleteA(a)">x</button>
-        </header>
-        <body>
-          <img src="@/assets/logo.png" />
+    <header>
+      <router-link to="/">
+        <h1>RecordMap</h1>
+      </router-link>
+      <button @click="deleteA(dataID)">x</button>
+    </header>
+    <body>
+      <div v-for="data in this.$store.state.markersSpace" :key="data">
+        <div v-if="data._id == this.$route.params.id">
+          <img src="@/assets/logo.png" class="data-img" />
           <div>
             {{ data.place_name }}
           </div>
@@ -15,9 +17,9 @@
             {{ data.contents }}
           </div>
           <small>{{ data.createAt }}</small>
-        </body>
+        </div>
       </div>
-    </div>
+    </body>
   </div>
 </template>
 
@@ -27,7 +29,7 @@ export default {
   props: {},
   data() {
     return {
-      a: this.$route.params.id,
+      dataID: this.$route.params.id,
     };
   },
   created() {
@@ -53,57 +55,32 @@ export default {
 <style scoped lang="scss">
 #Infocontainer {
   margin: 0 auto;
-  padding: 0 1rem;
   box-sizing: border-box;
-  max-width: 30em;
+  // max-width: 30em;
   font-size: 0.8rem;
-  position: absolute;
-  top: 0%;
-  left: 50%;
-  transform: translateX(-50%);
+  // position: absolute;
+  // top: 0%;
+  // left: 50%;
+  // transform: translateX(-50%);
   z-index: 99;
+  // min-width: 500px;
 
-  #header {
+  header {
     display: flex;
-    height: 3rem;
-    line-height: 3rem;
+    justify-content: space-between;
+    align-content: center;
+    width: 100%;
     border-bottom: 1px solid #9c9c9c;
+  }
+  body {
+    text-align: center;
+    margin: 0 auto;
 
-    > div {
-      &:nth-child(1) {
-        font-size: 1.4rem;
-        margin-right: 2rem;
-      }
+    .data-img {
+      width: 70%;
+      height: 70%;
+      background-color: #333;
     }
   }
-
-  #body {
-    > h3 {
-      margin: 10px 0;
-    }
-    li {
-      margin: 30px 0;
-      margin-bottom: 60px;
-
-      p {
-        margin: 20px 0;
-        p {
-          margin: 20px 0;
-        }
-      }
-    }
-    img {
-      width: 100%;
-      margin: 20px 0;
-    }
-  }
-}
-header {
-  display: flex;
-  justify-content: space-between;
-  align-content: center;
-}
-body {
-  text-align: center;
 }
 </style>
