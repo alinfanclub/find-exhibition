@@ -1,10 +1,19 @@
 <template>
   <div id="Infocontainer">
     <header>
-      <router-link to="/">
-        <h1>RecordMap</h1>
-      </router-link>
-      <button @click="deleteA(dataID)">x</button>
+      <div>
+        <router-link to="/">
+          <h1>RecordMap</h1>
+        </router-link>
+        <div class="btns">
+          <button @click="deleteA(dataID)">
+            <ion-icon name="trash-outline"></ion-icon>
+          </button>
+          <button @click="editPost(dataID)">
+            <ion-icon name="hammer-outline"></ion-icon>
+          </button>
+        </div>
+      </div>
     </header>
     <body>
       <div v-for="data in this.$store.state.markersSpace" :key="data">
@@ -66,17 +75,39 @@ export default {
   // min-width: 500px;
 
   header {
-    display: flex;
-    justify-content: space-between;
-    align-content: center;
-    width: 100%;
     border-bottom: 1px solid #9c9c9c;
+    margin-bottom: 50px;
+    padding: 0.5rem;
+    > div {
+      max-width: 700px;
+      display: flex;
+      justify-content: space-between;
+      align-content: center;
+      width: 100%;
+      margin: 0 auto;
+
+      .btns {
+        display: flex;
+        align-items: center;
+
+        button {
+          background-color: #fff;
+          border: none;
+          font-size: 1.5rem;
+          display: flex;
+          align-items: center;
+          cursor: pointer;
+          margin: 0 5px;
+        }
+      }
+    }
   }
   body {
     text-align: center;
     margin: 0 auto;
 
     .data-img {
+      max-width: 400px;
       width: 70%;
       height: 70%;
       background-color: #333;
