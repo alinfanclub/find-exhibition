@@ -47,7 +47,7 @@ export default {
   },
   methods: {
     async deleteA(id) {
-      if (confirm("시를 삭제 한다구요??")) {
+      if (confirm("삭제 하시겠나요?")) {
         try {
           await deleteMarker(id);
         } catch (error) {
@@ -56,6 +56,9 @@ export default {
         // this.$store.dispatch("FETCH_MARKERS_SPAC");
         this.$router.push("/space");
       }
+    },
+    editPost(id) {
+      this.$router.push("/edit/" + id);
     },
   },
 };

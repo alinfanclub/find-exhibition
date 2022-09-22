@@ -20,4 +20,8 @@ function deleteMarker(id) {
   return axios.delete(`${config.baseUrl}delete/${id}`);
 }
 
-export { fectchMarkersSpace, createMarker, deleteMarker };
+function editMarker(id, data) {
+  return axios.delete(`${config.baseUrl}edit/${id}`, data);
+}
+
+export { fectchMarkersSpace, createMarker, deleteMarker, editMarker };

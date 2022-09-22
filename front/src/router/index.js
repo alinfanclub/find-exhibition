@@ -24,6 +24,10 @@ const routes = [
     path: "/space/make",
     component: () => import("@/views/makeMarkerView.vue"),
   },
+  {
+    path: "/edit/:id",
+    component: () => import("@/components/editMarker.vue"),
+  },
 ];
 
 const router = createRouter({
