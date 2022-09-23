@@ -132,7 +132,7 @@
     width: 100%;
   } */
   .info .adress {
-    width: 100%;
+    width: 80%;
     padding: 1rem 0;
   }
   .info .adress p{
@@ -140,12 +140,12 @@
     overflow: hidden;
     text-overflow: ellipsis;
   }
-  .info .adress p:hover {
+  /* .info .adress p:hover {
     display: flex;
     flex-wrap: wrap;
     white-space: normal;
     width: 100%;
-  }
+  } */
 
   .info .header {
     display: flex;

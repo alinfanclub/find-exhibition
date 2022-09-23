@@ -42,8 +42,8 @@ router.post('/edit/:id', async (req, res) => {
         { _id: new mongodb.ObjectId(req.params.id)},
         {
           $set: {
-            place_name: req.body.title,
-            contents: req.body.mainText,
+            place_name: req.body.place_name,
+            contents: req.body.contents,
             date: req.body.date,
             createAt: new Date().toLocaleString(),
             fix: true,

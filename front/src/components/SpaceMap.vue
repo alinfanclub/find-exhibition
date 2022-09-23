@@ -26,7 +26,7 @@
             "
           >
             <div
-              v-show="list.place_name.includes(this.keywordSearch)"
+              v-show="list.place_name?.includes(this.keywordSearch)"
               class="ae"
               @click="go_to_place(list._id)"
             >
@@ -64,7 +64,7 @@ export default {
     };
   },
   created() {
-    this.$store.dispatch("FETCH_MARKERS_SPACE");
+    // this.$store.dispatch("FETCH_MARKERS_SPACE");
   },
   computed: {
     ...mapState(["isOK"]),
@@ -86,6 +86,7 @@ export default {
         "//dapi.kakao.com/v2/maps/sdk.js?autoload=false&appkey=3e1a77f956eae1e9dd319a03071ce091&libraries=services,clusterer,drawing";
       document.head.appendChild(script);
     }
+    this.$store.dispatch("FETCH_MARKERS_SPACE");
   },
   methods: {
     inputKeyword() {
@@ -202,7 +203,7 @@ export default {
             if (store.state.markersSpace[i].place_name == this.innerText) {
               router.push("/space/" + store.state.markersSpace[i]._id);
             } else {
-              console.log(111);
+              console.log(store.state.markersSpace[i].place_name);
             }
           }
         });
