@@ -319,13 +319,13 @@ export default {
       // ! 맵 클릭시 장소 추가 마커 생성
       kakao.maps.event.addListener(map, "dblclick", function (c) {
         var p = c.latLng;
-        store.state.np = p;
-        localStorage.setItem("la", store.state.np.Ma);
-        localStorage.setItem("ma", store.state.np.La);
-        console.log(store.state.np);
-        console.log(store.state.np);
+        store.state.clickLocation = p;
+        localStorage.setItem("la", store.state.clickLocation.Ma);
+        localStorage.setItem("ma", store.state.clickLocation.La);
+        console.log(store.state.clickLocation);
+        console.log(store.state.clickLocation);
         addMarker.setMap(map);
-        addMarker.setPosition(store.state.np);
+        addMarker.setPosition(store.state.clickLocation);
         addMarkerOverlay.setMap(null);
       });
       addMarkerOverlay.setMap(null);
@@ -333,14 +333,14 @@ export default {
       kakao.maps.event.addListener(addMarker, "click", function () {
         addMarkerOverlay.setMap(map);
         console.log(this.getPosition());
-        addMarkerOverlay.setPosition(store.state.np);
+        addMarkerOverlay.setPosition(store.state.clickLocation);
         map.panTo(this.getPosition());
       });
       // ! 마커 드래그시 커스텀 오버레이 같이 이동
       kakao.maps.event.addListener(addMarker, "dragend", function () {
         console.log(this.getPosition());
-        store.state.np = this.getPosition();
-        addMarkerOverlay.setPosition(store.state.np);
+        store.state.clickLocation = this.getPosition();
+        addMarkerOverlay.setPosition(store.state.clickLocation);
       });
     },
     // ! new method start
