@@ -18,7 +18,9 @@
     <body>
       <div v-for="data in this.$store.state.markersSpace" :key="data">
         <div v-if="data._id == this.$route.params.id">
-          <img src="@/assets/logo.png" class="data-img" />
+          <div class="img-box">
+            <img :src="getSrc(data.postImage)" class="data-img" />
+          </div>
           <div>
             {{ data.place_name }}
           </div>
@@ -26,6 +28,11 @@
             {{ data.contents }}
           </div>
           <small>{{ data.createAt }}</small>
+          <img
+            :src="this.$store.state.markersSpace.postImage"
+            alt=""
+            srcset=""
+          />
         </div>
       </div>
     </body>
@@ -59,6 +66,10 @@ export default {
     },
     editPost(id) {
       this.$router.push("/edit/" + id);
+    },
+    getSrc(data) {
+      // require()으로 묶어줌.
+      return require("../assets/" + data);
     },
   },
 };
@@ -114,6 +125,19 @@ export default {
       width: 70%;
       height: 70%;
       background-color: #333;
+    }
+
+    .img-box {
+      width: 15rem;
+      height: 15rem;
+      margin: 0 auto;
+      border: 1px solid #ddd;
+
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
     }
   }
 }

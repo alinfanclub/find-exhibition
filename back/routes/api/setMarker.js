@@ -1,5 +1,32 @@
 const express = require('express');
 const mongodb = require('mongodb');
+const multer = require('multer');
+
+const storage = multer.diskStorage({
+    destination: function(req, file, cb) {
+        cb(null, './../front/src/assets/');
+    },
+    filename: function(req, file, cb) {
+        cb(null, file.originalname);
+    }
+});
+
+const fileFilter = (req, file, cb) => {
+    //reject a file
+    if(file.mimetype === 'image/jpeg' || file.mimetype === 'image/png' || file.mimetype === 'image/jpg') {
+        cb(null, true);
+    } else {
+        cb(null, false);
+    }
+} 
+
+const upload = multer({
+    storage: storage,
+    limits: {
+        fileSize: 1024 * 1024 * 5
+    },
+    fileFilter: fileFilter
+});
 
 const router = express.Router();
 
@@ -10,14 +37,17 @@ router.get('/', async(req, res)=> {
 });
 
 // add post
-router.post('/', async (req, res) => {
+router.post('/', upload.single('postImage'), async (req, res, next) => {
     const post = await loadPostCollection();
+    console.log(req.file);
     await post.insertOne({
         place_name: req.body.place_name,
         lat : req.body.lat,
         lng : req.body.lng,
         contents : req.body.contents,
         createAt: new Date().toLocaleString(),
+        link: req.file,
+        postImage: req.file.originalname
     });
     res.status(201).send();
 })
@@ -35,17 +65,20 @@ router.delete('/delete/:id', async (req, res) => {
 
 // edit post
 
-router.post('/edit/:id', async (req, res) => {
+router.post('/edit/:id', upload.single('postImage'),async (req, res) => {
    try {
     const post = await loadPostCollection();
+    console.log(req.file);
+    console.log(req.body);
     await post.updateOne(
-        { _id: new mongodb.ObjectId(req.params.id)},
+        { _id: new mongodb.ObjectId(req.body.id)},
         {
           $set: {
             place_name: req.body.place_name,
             contents: req.body.contents,
             date: req.body.date,
             createAt: new Date().toLocaleString(),
+            postImage: req.file.originalname,
             fix: true,
           }
         }

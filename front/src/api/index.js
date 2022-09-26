@@ -12,16 +12,16 @@ function fectchMarkersSpace() {
   return axios.get(`${config.baseUrl}`);
 }
 
-function createMarker(data) {
-  return axios.post(`${config.baseUrl}`, data);
+function createMarker(fd) {
+  return axios.post(`${config.baseUrl}`, fd);
 }
 
 function deleteMarker(id) {
   return axios.delete(`${config.baseUrl}delete/${id}`);
 }
 
-function editMarker(id, data) {
-  return axios.post(`${config.baseUrl}edit/${id}`, data);
+function editMarker(fd) {
+  return axios.post(`${config.baseUrl}edit/${fd.id}`, fd);
 }
 
 export { fectchMarkersSpace, createMarker, deleteMarker, editMarker };
