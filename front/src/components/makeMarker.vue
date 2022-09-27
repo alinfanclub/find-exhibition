@@ -3,7 +3,16 @@
     <h3>장소 정보 입력</h3>
     <form @submit.prevent="save()" enctype="multipart/form-data">
       <input type="file" @change="onChange" id="postImage" />
-      <img :src="uploadImageFile" alt="" srcset="" />
+      <div>
+        <img
+          :src="uploadImageFile"
+          alt=""
+          srcset=""
+          v-if="uploadImageFile"
+          class="img-box"
+        />
+        <div v-else class="img-box img-box-before">사진 자리</div>
+      </div>
       <input type="text" name="" id="" v-model="title" />
       <textarea name="" id="" cols="30" rows="10" v-model="mainText"></textarea>
       <button>저장</button>
@@ -50,6 +59,11 @@ export default {
 };
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 @import url("../css/upload.css");
+.img-box {
+  width: 15rem;
+  height: 15rem;
+  margin: 0 auto;
+}
 </style>

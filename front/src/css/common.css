@@ -94,7 +94,7 @@
   .wrap {
     position: relative;
     left: 0%;
-    transform: translateY(-78%);
+    transform: translateY(-90%);
     width: 15rem;
     font-size: 1rem;
     font-family: 'Malgun Gothic', dotum, '돋움', sans-serif;
