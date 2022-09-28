@@ -5,6 +5,14 @@ const routes = [
     redirect: "/space",
   },
   {
+    path: "/login",
+    component: () => import("@/components/LoginVue.vue"),
+  },
+  {
+    path: "/signup",
+    component: () => import("@/components/SignUpVue.vue"),
+  },
+  {
     path: "/space",
     component: () => import("@/components/SpaceMap.vue"),
   },

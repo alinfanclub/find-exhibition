@@ -2,8 +2,8 @@
   <div id="makeMarker">
     <h3>장소 정보 입력</h3>
     <form @submit.prevent="save()" enctype="multipart/form-data">
-      <input type="file" @change="onChange" id="postImage" />
-      <div>
+      <div class="addFile">
+        <input type="file" @change="onChange" id="postImage" />
         <img
           :src="uploadImageFile"
           alt=""
@@ -11,11 +11,27 @@
           v-if="uploadImageFile"
           class="img-box"
         />
-        <div v-else class="img-box img-box-before">사진 자리</div>
+        <label for="postImage" id="postImageLabel" v-else>사진추가</label>
       </div>
-      <input type="text" name="" id="" v-model="title" />
-      <textarea name="" id="" cols="30" rows="10" v-model="mainText"></textarea>
-      <button>저장</button>
+      <div>
+        <input
+          type="text"
+          name=""
+          id=""
+          v-model="title"
+          placeholder="제목을 입력해주세요"
+        />
+      </div>
+      <div>
+        <textarea
+          name=""
+          id=""
+          cols="30"
+          rows="10"
+          v-model="mainText"
+        ></textarea>
+      </div>
+      <button @keydown="enter">저장</button>
     </form>
   </div>
 </template>
@@ -61,9 +77,47 @@ export default {
 
 <style lang="scss" scoped>
 @import url("../css/upload.css");
-.img-box {
-  width: 15rem;
-  height: 15rem;
+form {
+  > div {
+    margin-bottom: 1.5rem;
+    width: 100%;
+
+    input {
+      width: 100%;
+      box-sizing: border-box;
+    }
+    textarea {
+      width: 100%;
+      box-sizing: border-box;
+    }
+  }
+}
+.addFile {
+  position: relative;
+  width: 100%;
+  min-height: 20rem;
   margin: 0 auto;
+  margin-bottom: 1.5rem;
+  box-sizing: border-box;
+  #postImage {
+    display: none;
+  }
+  #postImageLabel {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 0.5rem;
+    transition: 0.3s;
+    border-radius: 8px;
+
+    &:hover {
+      background-color: #333;
+      color: #fff;
+    }
+  }
+  .img-box {
+    max-width: 100%;
+  }
 }
 </style>
