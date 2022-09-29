@@ -91,31 +91,6 @@ router.post('/edit/:id', upload.single('postImage'),async (req, res) => {
    }
 })
 
-var UserSchema = new mongoose.Schema({
-	name: String, // 이름
-	id: String, // 아이디
-	pw: String, // 비밀번호
-});
-
-var Users = mongoose.model('users', UserSchema);
-
-router.post('/signup', (req, res) => {
-	var new_user = new Users(req.body);
-
-	new_user.save((err) => {
-		if (err) return res.status(500).json({ message: '저장 실패!' });
-		else return res.status(200).json({ message: '저장 성공!', data: new_user });
-	});
-});
-
-router.post('/signin', (req, res) => {
-	Users.findOne({ id: req.body.id, password: req.body.password }, (err, user) => {
-		if (err) return res.status(500).json({ message: '에러!' });
-		else if (user) return res.status(200).json({ message: '유저 찾음!', data: user });
-		else return res.status(404).json({ message: '유저 없음!' });
-	});
-});
-
 async function loadPostCollection() {
     const client = await mongodb.MongoClient.connect('mongodb+srv://e759ksh:tkgl5012qq21@cluster0.bgjpc.mongodb.net/?retryWrites=true&w=majority', {
         useNewUrlParser: true,
