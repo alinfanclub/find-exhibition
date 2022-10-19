@@ -1,7 +1,7 @@
 const express = require('express');
 const mongodb = require('mongodb');
 const multer = require('multer');
-
+const checkAuth = require('../../middleware/checkAuth');
 
 const storage = multer.diskStorage({
     destination: function(req, file, cb) {
@@ -38,7 +38,7 @@ router.get('/', async(req, res)=> {
 });
 
 // add post
-router.post('/', upload.single('postImage'), async (req, res, next) => {
+router.post('/', upload.single('postImage'), checkAuth, async (req, res, next) => {
     const post = await loadPostCollection();
     console.log(req.file);
     await post.insertOne({
