@@ -23,6 +23,7 @@ export default createStore({
     clickLocation: "",
     markersSpace: [],
     isOK: false,
+    token: null,
   },
   actions,
   mutations,

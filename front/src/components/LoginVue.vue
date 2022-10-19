@@ -11,7 +11,7 @@
         <button>로그인</button>
       </div>
     </form>
-    <button><router-link to="/signup">회원가입</router-link></button>
+    <button><router-link to="/user/signup">회원가입</router-link></button>
   </div>
 </template>
 
@@ -28,11 +28,10 @@ export default {
     async loginTo() {
       const fd = {
         email: this.email,
-        password: this.password
-      }
+        password: this.password,
+      };
       await login(fd);
-      this.$router.push('/space')
-      
+      this.$router.push("/space");
     },
   },
 };

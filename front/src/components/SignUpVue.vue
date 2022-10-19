@@ -1,11 +1,11 @@
 <template>
   <div>
-    <form action="">
+    <form @submit.prevent="">
       <div>
-        <input type="text" name="" id="" />
+        <input type="text" />
       </div>
       <div>
-        <input type="password" name="" id="" />
+        <input type="password" />
       </div>
       <div>
         <button>회원가입</button>

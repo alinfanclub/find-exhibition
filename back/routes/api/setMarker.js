@@ -32,13 +32,13 @@ const upload = multer({
 const router = express.Router();
 
 // get post
-router.get('/', async(req, res)=> {
+router.get('/', checkAuth, async(req, res)=> {
     const post = await loadPostCollection();
     res.send(await post.find({}).toArray());
 });
 
 // add post
-router.post('/', upload.single('postImage'), checkAuth, async (req, res, next) => {
+router.post('/' , checkAuth, upload.single('postImage'), async (req, res, next) => {
     const post = await loadPostCollection();
     console.log(req.file);
     await post.insertOne({
@@ -54,7 +54,7 @@ router.post('/', upload.single('postImage'), checkAuth, async (req, res, next) =
 })
 
 // delete post
-router.delete('/delete/:id', async (req, res) => {
+router.delete('/delete/:id', checkAuth, async (req, res) => {
    try {
     const post = await loadPostCollection();
     await post.deleteOne({_id: new mongodb.ObjectId(req.params.id)})
@@ -66,7 +66,7 @@ router.delete('/delete/:id', async (req, res) => {
 
 // edit post
 
-router.post('/edit/:id', upload.single('postImage'),async (req, res) => {
+router.post('/edit/:id', upload.single('postImage'), checkAuth, async (req, res) => {
    try {
     const post = await loadPostCollection();
     console.log(req.file);

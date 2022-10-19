@@ -6,8 +6,9 @@ const jwt = require('jsonwebtoken');
 require("dotenv").config();
 
 const User = require('../../model/user');
+const checkAuth = require('../../middleware/checkAuth');
 
-router.post('/login', (req, res, next) => {
+router.post('/login',(req, res, next) => {
     User.find({
         email: req.body.email
     })
