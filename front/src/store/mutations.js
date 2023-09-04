@@ -3,7 +3,7 @@ export default {
     state.markersSpace = data;
     state.isOK = !state.isOK;
   },
-  SET_TOKEN(state, _token) {
-    state.token = _token;
+  SET_TOKEN(state, token) {
+    state.token = token;
   },
 };

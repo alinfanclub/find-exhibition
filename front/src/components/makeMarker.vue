@@ -48,12 +48,17 @@ export default {
   },
   methods: {
     async save() {
-      const fd = new FormData();
-      fd.append("postImage", document.querySelector("#postImage").files[0]);
-      fd.append("place_name", this.title);
-      fd.append("lat", localStorage.la);
-      fd.append("lng", localStorage.ma);
-      fd.append("contents", this.mainText);
+      // const fd = new FormData();
+      // fd.append("postImage", document.querySelector("#postImage").files[0]);
+      // fd.append("place_name", this.title);
+      // fd.append("lat", localStorage.la);
+      // fd.append("lng", localStorage.ma);
+      // fd.append("contents", this.mainText);
+
+      const fd = {
+        title: this.title,
+        contents: this.mainText,
+      };
       await createMarker(fd);
       this.$router.push("/space");
       localStorage.clear();
