@@ -1,27 +1,30 @@
 import axios from "axios";
+import { setInterceptors } from "./common/interceptors";
 
-const config = {
-  baseUrl: "http://localhost:5001/api/space/",
-};
+function createInstance() {
+  const instance = axios.create({
+    baseURL: "http://localhost:5001/api/space",
+  });
 
-// function fectchSpaceList(id) {
-//   return axios.get(`${config.baseUrl}/space/${id}.json`);
-// }
+  return setInterceptors(instance);
+}
+
+const instance = createInstance();
 
 function fectchMarkersSpace() {
-  return axios.get(`${config.baseUrl}`);
+  return instance.get("/");
 }
 
 function createMarker(fd) {
-  return axios.post(`${config.baseUrl}`, fd);
+  return instance.post("/", fd);
 }
 
 function deleteMarker(id) {
-  return axios.delete(`${config.baseUrl}delete/${id}`);
+  return instance.delete(`delete/${id}`);
 }
 
 function editMarker(fd) {
-  return axios.post(`${config.baseUrl}edit/${fd.id}`, fd);
+  return instance.post(`edit/${fd.id}`, fd);
 }
 
 export { fectchMarkersSpace, createMarker, deleteMarker, editMarker };

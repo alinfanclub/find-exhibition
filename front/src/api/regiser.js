@@ -1,15 +1,19 @@
 import axios from "axios";
 
-const config = {
-  baseUrl: "http://localhost:5001/user/",
-};
+function createInstance() {
+  return axios.create({
+    baseURL: "http://localhost:5001/user/",
+  });
+}
+
+const instance = createInstance();
 
 function register() {
-  return axios.post(`${config.baseUrl}singup`);
+  return instance.post("singup");
 }
 
 function login(data) {
-  return axios.post(`${config.baseUrl}login`, data);
+  return instance.post("login", data);
 }
 
 export { register, login };

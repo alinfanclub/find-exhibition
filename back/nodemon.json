@@ -1,6 +1,6 @@
 {
     "env": {
         "MONGO_ATLAS_PW": "tkgl5012qq21",
-        "JWT_KEY": "secret"
+        "JWT_KEY": "MySecretKey1$1$234"
     }
 }
