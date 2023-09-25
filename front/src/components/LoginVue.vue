@@ -28,11 +28,10 @@ export default {
     async loginTo() {
       const fd = {
         email: this.email,
-        password: this.password
-      }
+        password: this.password,
+      };
       await login(fd);
-      this.$router.push('/space')
-      
+      this.$router.push("/space");
     },
   },
 };
