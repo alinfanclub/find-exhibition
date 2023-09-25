@@ -30,13 +30,10 @@ export default {
         email: this.email,
         password: this.password,
       };
-<<<<<<< HEAD
       await login(fd);
-=======
       const { data } = await login(fd);
       this.$store.commit("SET_TOKEN", data.token);
       console.log(data);
->>>>>>> 922ce4fd3176eea2d23241d832ef9117c2ef1d8f
       this.$router.push("/space");
     },
   },
